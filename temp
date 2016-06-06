@@ -1,0 +1,18 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+	ignorecase = true
+	precomposeunicode = true
+[remote "origin"]
+	url = git@github.com:elimak/DiscogsDBExtractor.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+
+[remote "deploy"]
+	url = git@heroku.com:discogs-extractor.git
+	fetch = +refs/heads/*:refs/remotes/heroku/*
+
+[remote "heroku"]
+	url = https://git.heroku.com/stormy-ravine-86828.git
+	fetch = +refs/heads/*:refs/remotes/heroku/*

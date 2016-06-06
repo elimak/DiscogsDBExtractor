@@ -1,0 +1,10 @@
+{
+  "name": "discogs-metadata-extractor",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "^4.13.4",
+    "express-bunyan-logger": "^1.2.0",
+    "mongodb": "^2.1.21",
+    "mongoose": "^4.4.20"
+  }
+}
