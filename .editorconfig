@@ -1,10 +1,13 @@
 [*]
-indent_style = space
 end_of_line = lf
-indent_size = 2
+insert_final_newline = true
+# Unix-style newlines with a newline ending every file
 charset = utf-8
-trim_trailing_whitespace = true
+# Indent size is set to 4 spaces
+indent_style = space
+indent_size = 4
 
-[*.md]
-max_line_length = 0
-trim_trailing_whitespace = false
+# Matches the exact files either package.json, bower.json or .travis.yml
+[{package.json,bower.json,.travis.yml}]
+indent_style = space
+indent_size = 2
