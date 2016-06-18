@@ -5,16 +5,16 @@ import NotFound from 'containers/NotFound';
 import App from 'containers/App';
 
 export default (store) => {
-  /**
-   * Please keep routes in alphabetical order
-   */
-  return (
-    <Route path="/" component={App}>
-      { /* Home (main) route */ }
-      <IndexRoute component={Home}/>
+    /**
+    * Please keep routes in alphabetical order
+    */
+    return (
+        <Route path="/" component={App}>
+            { /* Home (main) route */ }
+            <IndexRoute component={Home}/>
 
-      { /* Catch all route */ }
-      <Route path="*" component={NotFound} status={404} />
-    </Route>
-  );
+            { /* Catch all route */ }
+            <Route path="*" component={NotFound} status={404} />
+        </Route>
+    );
 };
