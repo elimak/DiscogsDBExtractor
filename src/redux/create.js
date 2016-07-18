@@ -18,7 +18,7 @@ export default function createStore(history, client, data) {
             persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
         )(_createStore);
     } else {
-            finalCreateStore = applyMiddleware(...middleware)(_createStore);
+        finalCreateStore = applyMiddleware(...middleware)(_createStore);
     }
 
     const reducer = require('./modules/reducer');

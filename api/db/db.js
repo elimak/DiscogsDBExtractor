@@ -1,5 +1,3 @@
-/
-
 //var Todo = mongoose.model('Todo', {
 //    task: String,
 //    isCompleted: Boolean,

@@ -1,0 +1,1055 @@
+{
+    "styles":[
+        "Breakbeat",
+        "IDM",
+        "Electro"
+    ],
+    "videos":[
+        {
+            "duration":303,
+            "description":"Ryuichi Sakamoto(YMO) - Riot In Lagos (Plaid Remix)",
+            "embed":true,
+            "uri":"https://www.youtube.com/watch?v=RYgS13M2NxE",
+            "title":"Ryuichi Sakamoto(YMO) - Riot In Lagos (Plaid Remix)"
+        },
+        {
+            "duration":344,
+            "description":"Plaid - Wrong Ways",
+            "embed":true,
+            "uri":"https://www.youtube.com/watch?v=2bPTFq4lCyQ",
+            "title":"Plaid - Wrong Ways"
+        },
+        {
+            "duration":249,
+            "description":"The Reflection - Spiral Bits (Plaid Remix)",
+            "embed":true,
+            "uri":"https://www.youtube.com/watch?v=umUNa7yrOfA",
+            "title":"The Reflection - Spiral Bits (Plaid Remix)"
+        },
+        {
+            "duration":342,
+            "description":"Sieg Uber Die Sonne - You'll Never Come Back (Plaid remix)",
+            "embed":true,
+            "uri":"https://www.youtube.com/watch?v=H9G-Z3Ylp64",
+            "title":"Sieg Uber Die Sonne - You'll Never Come Back (Plaid remix)"
+        },
+        {
+            "duration":326,
+            "description":"Unkle-Coffeehouse Conversation (Plaid Mix)",
+            "embed":true,
+            "uri":"https://www.youtube.com/watch?v=5IeZGmQGVFU",
+            "title":"Unkle-Coffeehouse Conversation (Plaid Mix)"
+        },
+        {
+            "duration":363,
+            "description":"Ebz - Malawi Gold (Plaid rmx)",
+            "embed":true,
+            "uri":"https://www.youtube.com/watch?v=rtHywHpcKzM",
+            "title":"Ebz - Malawi Gold (Plaid rmx)"
+        },
+        {
+            "duration":299,
+            "description":"GrandmasterFlash- Scorpio(plaid Remix)",
+            "embed":true,
+            "uri":"https://www.youtube.com/watch?v=Po65SWvJ9TY",
+            "title":"GrandmasterFlash- Scorpio(plaid Remix)"
+        },
+        {
+            "duration":284,
+            "description":"Goldfrapp - Utopia (Plaid remix)",
+            "embed":true,
+            "uri":"https://www.youtube.com/watch?v=uEvJXRD1snk",
+            "title":"Goldfrapp - Utopia (Plaid remix)"
+        },
+        {
+            "duration":294,
+            "description":"Koolaking - One Latin (Plaid remix)",
+            "embed":true,
+            "uri":"https://www.youtube.com/watch?v=ya3IFbHGavA",
+            "title":"Koolaking - One Latin (Plaid remix)"
+        },
+        {
+            "duration":396,
+            "description":"Nicolette - No Government (Plaid remix)",
+            "embed":true,
+            "uri":"https://www.youtube.com/watch?v=W5hivDXm5wY",
+            "title":"Nicolette - No Government (Plaid remix)"
+        },
+        {
+            "duration":422,
+            "description":"Funky Porcini - King Ashabanapal (Plaid Mix)",
+            "embed":true,
+            "uri":"https://www.youtube.com/watch?v=YVid3GJ4d9w",
+            "title":"Funky Porcini - King Ashabanapal (Plaid Mix)"
+        },
+        {
+            "duration":393,
+            "description":"Dropshadow Disease - Fototienda (Plaid Remix)",
+            "embed":true,
+            "uri":"https://www.youtube.com/watch?v=2TRZjxI1oC8",
+            "title":"Dropshadow Disease - Fototienda (Plaid Remix)"
+        },
+        {
+            "duration":419,
+            "description":"Sensorama - Zone 30 (Plaid Remix)",
+            "embed":true,
+            "uri":"https://www.youtube.com/watch?v=7K31G8ojFYY",
+            "title":"Sensorama - Zone 30 (Plaid Remix)"
+        },
+        {
+            "duration":317,
+            "description":"Herbert - Foreign Bodies (Plaid Mix)",
+            "embed":true,
+            "uri":"https://www.youtube.com/watch?v=5jl201Ti5R8",
+            "title":"Herbert - Foreign Bodies (Plaid Mix)"
+        },
+        {
+            "duration":317,
+            "description":"Jung Collective - Street Preacher (Plaid Mix)",
+            "embed":true,
+            "uri":"https://www.youtube.com/watch?v=Hey6iLM1sLE",
+            "title":"Jung Collective - Street Preacher (Plaid Mix)"
+        },
+        {
+            "duration":299,
+            "description":"Coba - After Dinner [Plaid Remix]",
+            "embed":true,
+            "uri":"https://www.youtube.com/watch?v=QsP7n227pj4",
+            "title":"Coba - After Dinner [Plaid Remix]"
+        }
+    ],
+    "series":[
+
+    ],
+    "labels":[
+        {
+            "name":"Peacefrog Records",
+            "entity_type":"1",
+            "catno":"PFG030CD",
+            "resource_url":"https://api.discogs.com/labels/253",
+            "id":253,
+            "entity_type_name":"Label"
+        },
+        {
+            "name":"Peacefrog Records",
+            "entity_type":"1",
+            "catno":"PFG030",
+            "resource_url":"https://api.discogs.com/labels/253",
+            "id":253,
+            "entity_type_name":"Label"
+        }
+    ],
+    "year":2003,
+    "community":{
+        "status":"Accepted",
+        "rating":{
+            "count":155,
+            "average":4.22
+        },
+        "have":606,
+        "contributors":[
+            {
+                "username":"eiskristall",
+                "resource_url":"https://api.discogs.com/users/eiskristall"
+            },
+            {
+                "username":"cthulhu303",
+                "resource_url":"https://api.discogs.com/users/cthulhu303"
+            },
+            {
+                "username":"md",
+                "resource_url":"https://api.discogs.com/users/md"
+            },
+            {
+                "username":"scoundrel",
+                "resource_url":"https://api.discogs.com/users/scoundrel"
+            },
+            {
+                "username":"zevulon",
+                "resource_url":"https://api.discogs.com/users/zevulon"
+            },
+            {
+                "username":"berb",
+                "resource_url":"https://api.discogs.com/users/berb"
+            },
+            {
+                "username":"akhenaton",
+                "resource_url":"https://api.discogs.com/users/akhenaton"
+            },
+            {
+                "username":"paradioxide",
+                "resource_url":"https://api.discogs.com/users/paradioxide"
+            },
+            {
+                "username":"cocktailmix",
+                "resource_url":"https://api.discogs.com/users/cocktailmix"
+            },
+            {
+                "username":"ptambient",
+                "resource_url":"https://api.discogs.com/users/ptambient"
+            },
+            {
+                "username":"jona830",
+                "resource_url":"https://api.discogs.com/users/jona830"
+            },
+            {
+                "username":"eskolaah",
+                "resource_url":"https://api.discogs.com/users/eskolaah"
+            },
+            {
+                "username":"kryger",
+                "resource_url":"https://api.discogs.com/users/kryger"
+            },
+            {
+                "username":"Vephthode",
+                "resource_url":"https://api.discogs.com/users/Vephthode"
+            },
+            {
+                "username":"mirva",
+                "resource_url":"https://api.discogs.com/users/mirva"
+            },
+            {
+                "username":"shadowself",
+                "resource_url":"https://api.discogs.com/users/shadowself"
+            },
+            {
+                "username":"ArpSolina",
+                "resource_url":"https://api.discogs.com/users/ArpSolina"
+            }
+        ],
+        "want":75,
+        "submitter":{
+            "username":"eiskristall",
+            "resource_url":"https://api.discogs.com/users/eiskristall"
+        },
+        "data_quality":"Correct"
+    },
+    "artists":[
+        {
+            "join":",",
+            "name":"Plaid",
+            "anv":"",
+            "tracks":"",
+            "role":"",
+            "resource_url":"https://api.discogs.com/artists/762",
+            "id":762
+        }
+    ],
+    "images":[
+        {
+            "uri":"",
+            "height":601,
+            "width":600,
+            "resource_url":"",
+            "type":"primary",
+            "uri150":""
+        },
+        {
+            "uri":"",
+            "height":467,
+            "width":600,
+            "resource_url":"",
+            "type":"secondary",
+            "uri150":""
+        },
+        {
+            "uri":"",
+            "height":600,
+            "width":600,
+            "resource_url":"",
+            "type":"secondary",
+            "uri150":""
+        },
+        {
+            "uri":"",
+            "height":594,
+            "width":600,
+            "resource_url":"",
+            "type":"secondary",
+            "uri150":""
+        },
+        {
+            "uri":"",
+            "height":296,
+            "width":600,
+            "resource_url":"",
+            "type":"secondary",
+            "uri150":""
+        },
+        {
+            "uri":"",
+            "height":476,
+            "width":600,
+            "resource_url":"",
+            "type":"secondary",
+            "uri150":""
+        }
+    ],
+    "format_quantity":2,
+    "id":126077,
+    "genres":[
+        "Electronic"
+    ],
+    "thumb":"",
+    "num_for_sale":18,
+    "title":"Plaid Remixes (Parts In The Post)",
+    "date_changed":"2016-01-03T08:40:50-08:00",
+    "master_id":6852,
+    "lowest_price":4.61303247574863,
+    "status":"Accepted",
+    "released_formatted":"2003",
+    "estimated_weight":170,
+    "master_url":"https://api.discogs.com/masters/6852",
+    "released":"2003",
+    "date_added":"2003-03-29T00:55:13-08:00",
+    "tracklist":[
+        {
+            "extraartists":[
+                {
+                    "join":"",
+                    "name":"Bj\u00f6rk",
+                    "anv":"Bjork",
+                    "tracks":"",
+                    "role":"Written-By, Producer",
+                    "resource_url":"https://api.discogs.com/artists/1373",
+                    "id":1373
+                }
+            ],
+            "title":"All Is Full Of Love (Plaid Remix)",
+            "type_":"track",
+            "artists":[
+                {
+                    "join":",",
+                    "name":"Bj\u00f6rk",
+                    "anv":"Bjork",
+                    "tracks":"",
+                    "role":"",
+                    "resource_url":"https://api.discogs.com/artists/1373",
+                    "id":1373
+                }
+            ],
+            "duration":"4:18",
+            "position":"1-1"
+        },
+        {
+            "extraartists":[
+                {
+                    "join":"",
+                    "name":"Masayuki Ishikawa",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"Producer",
+                    "resource_url":"https://api.discogs.com/artists/159447",
+                    "id":159447
+                },
+                {
+                    "join":"",
+                    "name":"Ryuichi Sakamoto",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"Written-By",
+                    "resource_url":"https://api.discogs.com/artists/5087",
+                    "id":5087
+                }
+            ],
+            "title":"Riot In Lagos (Plaid Remix)",
+            "type_":"track",
+            "artists":[
+                {
+                    "join":",",
+                    "name":"Tao",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"",
+                    "resource_url":"https://api.discogs.com/artists/13242",
+                    "id":13242
+                }
+            ],
+            "duration":"5:08",
+            "position":"1-2"
+        },
+        {
+            "extraartists":[
+                {
+                    "join":"",
+                    "name":"Nobuhiko Tanuma",
+                    "anv":"Ebizoo Tanuma",
+                    "tracks":"",
+                    "role":"Written-By, Producer",
+                    "resource_url":"https://api.discogs.com/artists/1191033",
+                    "id":1191033
+                }
+            ],
+            "title":"Malawi Gold (Plaid Remix)",
+            "type_":"track",
+            "artists":[
+                {
+                    "join":",",
+                    "name":"Ebz",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"",
+                    "resource_url":"https://api.discogs.com/artists/52269",
+                    "id":52269
+                }
+            ],
+            "duration":"6:02",
+            "position":"1-3"
+        },
+        {
+            "extraartists":[
+                {
+                    "join":"",
+                    "name":"Dandy Jack",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"Written-By, Producer",
+                    "resource_url":"https://api.discogs.com/artists/9847",
+                    "id":9847
+                },
+                {
+                    "join":"",
+                    "name":"Pink Elln",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"Written-By, Producer",
+                    "resource_url":"https://api.discogs.com/artists/23345",
+                    "id":23345
+                }
+            ],
+            "title":"You'll Never Come Back (Plaid Remix)",
+            "type_":"track",
+            "artists":[
+                {
+                    "join":",",
+                    "name":"Sieg \u00dcber Die Sonne",
+                    "anv":"Sieg \u00daber Die Sonne",
+                    "tracks":"",
+                    "role":"",
+                    "resource_url":"https://api.discogs.com/artists/22942",
+                    "id":22942
+                }
+            ],
+            "duration":"5:41",
+            "position":"1-4"
+        },
+        {
+            "extraartists":[
+                {
+                    "join":"",
+                    "name":"Ichiro Taniguchi",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"Written-By, Producer",
+                    "resource_url":"https://api.discogs.com/artists/672280",
+                    "id":672280
+                }
+            ],
+            "title":"Spiral Bits (Plaid Remix)",
+            "type_":"track",
+            "artists":[
+                {
+                    "join":",",
+                    "name":"Reflection",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"",
+                    "resource_url":"https://api.discogs.com/artists/2317",
+                    "id":2317
+                }
+            ],
+            "duration":"4:08",
+            "position":"1-5"
+        },
+        {
+            "extraartists":[
+                {
+                    "join":"",
+                    "name":"Tony Messenger",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"Producer",
+                    "resource_url":"https://api.discogs.com/artists/603166",
+                    "id":603166
+                },
+                {
+                    "join":"",
+                    "name":"Al Smith (3)",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"Written-By",
+                    "resource_url":"https://api.discogs.com/artists/807210",
+                    "id":807210
+                },
+                {
+                    "join":"",
+                    "name":"Russ Shean",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"Written-By",
+                    "resource_url":"https://api.discogs.com/artists/807209",
+                    "id":807209
+                }
+            ],
+            "title":"One Latin (Plaid Remix)",
+            "type_":"track",
+            "artists":[
+                {
+                    "join":",",
+                    "name":"Koolaking",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"",
+                    "resource_url":"https://api.discogs.com/artists/71119",
+                    "id":71119
+                }
+            ],
+            "duration":"4:53",
+            "position":"1-6"
+        },
+        {
+            "extraartists":[
+                {
+                    "join":"",
+                    "name":"Greg Watts",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"Written-By, Producer",
+                    "resource_url":"https://api.discogs.com/artists/1069041",
+                    "id":1069041
+                }
+            ],
+            "title":"Juicy Jazz Girls (Plaid Remix)",
+            "type_":"track",
+            "artists":[
+                {
+                    "join":",",
+                    "name":"Gregory Fleckner Quintet",
+                    "anv":"Gregory Fleckner Quartet",
+                    "tracks":"",
+                    "role":"",
+                    "resource_url":"https://api.discogs.com/artists/6313",
+                    "id":6313
+                }
+            ],
+            "duration":"7:42",
+            "position":"1-7"
+        },
+        {
+            "extraartists":[
+                {
+                    "join":"",
+                    "name":"Rupert Parkes",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"Written-By, Producer",
+                    "resource_url":"https://api.discogs.com/artists/243991",
+                    "id":243991
+                }
+            ],
+            "title":"Relics (Plaid Remix)",
+            "type_":"track",
+            "artists":[
+                {
+                    "join":",",
+                    "name":"Studio Pressure",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"",
+                    "resource_url":"https://api.discogs.com/artists/16982",
+                    "id":16982
+                }
+            ],
+            "duration":"7:10",
+            "position":"1-8"
+        },
+        {
+            "extraartists":[
+                {
+                    "join":"",
+                    "name":"Edward Morris",
+                    "anv":"Morris",
+                    "tracks":"",
+                    "role":"Written-By, Producer",
+                    "resource_url":"https://api.discogs.com/artists/788177",
+                    "id":788177
+                },
+                {
+                    "join":"",
+                    "name":"Guy Todd Williams",
+                    "anv":"Williams",
+                    "tracks":"",
+                    "role":"Written-By, Producer",
+                    "resource_url":"https://api.discogs.com/artists/802798",
+                    "id":802798
+                },
+                {
+                    "join":"",
+                    "name":"Keith Wiggins",
+                    "anv":"Wiggins",
+                    "tracks":"",
+                    "role":"Written-By, Producer",
+                    "resource_url":"https://api.discogs.com/artists/802796",
+                    "id":802796
+                },
+                {
+                    "join":"",
+                    "name":"Melvin Glover",
+                    "anv":"Glover",
+                    "tracks":"",
+                    "role":"Written-By, Producer",
+                    "resource_url":"https://api.discogs.com/artists/115934",
+                    "id":115934
+                },
+                {
+                    "join":"",
+                    "name":"Nathaniel Glover",
+                    "anv":"Glover",
+                    "tracks":"",
+                    "role":"Written-By, Producer",
+                    "resource_url":"https://api.discogs.com/artists/802793",
+                    "id":802793
+                }
+            ],
+            "title":"Scorpio (Plaid Remix)",
+            "type_":"track",
+            "artists":[
+                {
+                    "join":",",
+                    "name":"Grandmaster Flash & The Furious Five",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"",
+                    "resource_url":"https://api.discogs.com/artists/20590",
+                    "id":20590
+                }
+            ],
+            "duration":"4:57",
+            "position":"1-9"
+        },
+        {
+            "extraartists":[
+                {
+                    "join":"",
+                    "name":"Nicolette",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"Written-By, Producer",
+                    "resource_url":"https://api.discogs.com/artists/1559",
+                    "id":1559
+                }
+            ],
+            "title":"No Government (Plaid Remix)",
+            "type_":"track",
+            "artists":[
+                {
+                    "join":",",
+                    "name":"Nicolette",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"",
+                    "resource_url":"https://api.discogs.com/artists/1559",
+                    "id":1559
+                }
+            ],
+            "duration":"6:34",
+            "position":"1-10"
+        },
+        {
+            "extraartists":[
+                {
+                    "join":"",
+                    "name":"Plaid",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"Written-By, Producer",
+                    "resource_url":"https://api.discogs.com/artists/762",
+                    "id":762
+                }
+            ],
+            "title":"Wrong Ways",
+            "type_":"track",
+            "artists":[
+                {
+                    "join":",",
+                    "name":"Plaid",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"",
+                    "resource_url":"https://api.discogs.com/artists/762",
+                    "id":762
+                }
+            ],
+            "duration":"5:48",
+            "position":"2-1"
+        },
+        {
+            "extraartists":[
+                {
+                    "join":"",
+                    "name":"UNKLE",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"Written-By, Producer",
+                    "resource_url":"https://api.discogs.com/artists/3194",
+                    "id":3194
+                }
+            ],
+            "title":"Coffeehouse Conversation (Plaid Remix)",
+            "type_":"track",
+            "artists":[
+                {
+                    "join":",",
+                    "name":"Unkle",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"",
+                    "resource_url":"https://api.discogs.com/artists/3194",
+                    "id":3194
+                }
+            ],
+            "duration":"5:22",
+            "position":"2-2"
+        },
+        {
+            "extraartists":[
+                {
+                    "join":"",
+                    "name":"Nicolette",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"Written-By, Producer",
+                    "resource_url":"https://api.discogs.com/artists/1559",
+                    "id":1559
+                }
+            ],
+            "title":"Wholesome (Plaid Remix)",
+            "type_":"track",
+            "artists":[
+                {
+                    "join":",",
+                    "name":"Nicolette",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"",
+                    "resource_url":"https://api.discogs.com/artists/1559",
+                    "id":1559
+                }
+            ],
+            "duration":"4:40",
+            "position":"2-3"
+        },
+        {
+            "extraartists":[
+                {
+                    "join":"",
+                    "name":"Alison Goldfrapp",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"Written-By, Producer",
+                    "resource_url":"https://api.discogs.com/artists/15589",
+                    "id":15589
+                },
+                {
+                    "join":"",
+                    "name":"Will Gregory",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"Written-By, Producer",
+                    "resource_url":"https://api.discogs.com/artists/35204",
+                    "id":35204
+                }
+            ],
+            "title":"Utopia (Plaid Remix)",
+            "type_":"track",
+            "artists":[
+                {
+                    "join":",",
+                    "name":"Goldfrapp",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"",
+                    "resource_url":"https://api.discogs.com/artists/2720",
+                    "id":2720
+                }
+            ],
+            "duration":"4:42",
+            "position":"2-4"
+        },
+        {
+            "extraartists":[
+                {
+                    "join":"",
+                    "name":"Funki Porcini",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"Written-By, Producer",
+                    "resource_url":"https://api.discogs.com/artists/1178",
+                    "id":1178
+                }
+            ],
+            "title":"King Ashabanapal (Plaid Remix)",
+            "type_":"track",
+            "artists":[
+                {
+                    "join":",",
+                    "name":"Funki Porcini",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"",
+                    "resource_url":"https://api.discogs.com/artists/1178",
+                    "id":1178
+                }
+            ],
+            "duration":"7:00",
+            "position":"2-5"
+        },
+        {
+            "extraartists":[
+                {
+                    "join":"",
+                    "name":"Atom Heart",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"Written-By, Producer",
+                    "resource_url":"https://api.discogs.com/artists/24",
+                    "id":24
+                }
+            ],
+            "title":"Fototienda (Plaid Remix)",
+            "type_":"track",
+            "artists":[
+                {
+                    "join":",",
+                    "name":"Dropshadow Disease",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"",
+                    "resource_url":"https://api.discogs.com/artists/3703",
+                    "id":3703
+                }
+            ],
+            "duration":"6:32",
+            "position":"2-6"
+        },
+        {
+            "extraartists":[
+                {
+                    "join":"",
+                    "name":"J\u00f6rn Elling Wuttke",
+                    "anv":"Jorn Elling Wuttke",
+                    "tracks":"",
+                    "role":"Written-By, Producer",
+                    "resource_url":"https://api.discogs.com/artists/20742",
+                    "id":20742
+                },
+                {
+                    "join":"",
+                    "name":"Roman Fl\u00fcgel",
+                    "anv":"Roman Flugel",
+                    "tracks":"",
+                    "role":"Written-By, Producer",
+                    "resource_url":"https://api.discogs.com/artists/13111",
+                    "id":13111
+                }
+            ],
+            "title":"Zone 30 (Plaid Remix)",
+            "type_":"track",
+            "artists":[
+                {
+                    "join":",",
+                    "name":"Sensorama",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"",
+                    "resource_url":"https://api.discogs.com/artists/3230",
+                    "id":3230
+                }
+            ],
+            "duration":"6:58",
+            "position":"2-7"
+        },
+        {
+            "extraartists":[
+                {
+                    "join":"",
+                    "name":"Dani Siciliano",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"Written-By",
+                    "resource_url":"https://api.discogs.com/artists/21078",
+                    "id":21078
+                },
+                {
+                    "join":"",
+                    "name":"Matthew Herbert",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"Written-By, Producer",
+                    "resource_url":"https://api.discogs.com/artists/22217",
+                    "id":22217
+                }
+            ],
+            "title":"Foreign Bodies (Plaid Remix)",
+            "type_":"track",
+            "artists":[
+                {
+                    "join":",",
+                    "name":"Matthew Herbert",
+                    "anv":"Herbert",
+                    "tracks":"",
+                    "role":"",
+                    "resource_url":"https://api.discogs.com/artists/22217",
+                    "id":22217
+                }
+            ],
+            "duration":"5:14",
+            "position":"2-8"
+        },
+        {
+            "extraartists":[
+                {
+                    "join":"",
+                    "name":"Alan Gubby",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"Written-By, Producer",
+                    "resource_url":"https://api.discogs.com/artists/349931",
+                    "id":349931
+                }
+            ],
+            "title":"Street Preacher (Plaid Remix)",
+            "type_":"track",
+            "artists":[
+                {
+                    "join":",",
+                    "name":"Jung Collective",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"",
+                    "resource_url":"https://api.discogs.com/artists/3622",
+                    "id":3622
+                }
+            ],
+            "duration":"5:11",
+            "position":"2-9"
+        },
+        {
+            "extraartists":[
+                {
+                    "join":"",
+                    "name":"Coba",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"Written-By, Producer",
+                    "resource_url":"https://api.discogs.com/artists/96500",
+                    "id":96500
+                }
+            ],
+            "title":"After Dinner (Plaid Remix)",
+            "type_":"track",
+            "artists":[
+                {
+                    "join":",",
+                    "name":"Coba",
+                    "anv":"",
+                    "tracks":"",
+                    "role":"",
+                    "resource_url":"https://api.discogs.com/artists/96500",
+                    "id":96500
+                }
+            ],
+            "duration":"4:58",
+            "position":"2-10"
+        }
+    ],
+    "extraartists":[
+        {
+            "join":"",
+            "name":"Think 1",
+            "anv":"Think1",
+            "tracks":"",
+            "role":"Design",
+            "resource_url":"https://api.discogs.com/artists/84006",
+            "id":84006
+        },
+        {
+            "join":"",
+            "name":"Plaid",
+            "anv":"",
+            "tracks":"1-1 to 1-10, 2-2 to 2-10",
+            "role":"Remix, Producer [Additional Production]",
+            "resource_url":"https://api.discogs.com/artists/762",
+            "id":762
+        }
+    ],
+    "country":"UK",
+    "notes":"Compilation of Plaid's remixes of other artists.\n\nCatalog# on spine: \"PFG030CD\", and on the CDs: \"PFG030\".\n\n\u2117 2003 Peacefrog Records\n\u00a9 2003 Peacefrog Records\n",
+    "identifiers":[
+        {
+            "type":"Barcode",
+            "description":"Scanned",
+            "value":"5050294134528"
+        },
+        {
+            "type":"Matrix / Runout",
+            "description":"CD1",
+            "value":"IMPRESS PFG030/1 01"
+        },
+        {
+            "type":"Mastering SID Code",
+            "description":"CD1",
+            "value":"IFPI L135"
+        },
+        {
+            "type":"Mould SID Code",
+            "description":"CD1",
+            "value":"IFPI 04G1"
+        },
+        {
+            "type":"Matrix / Runout",
+            "description":"CD2",
+            "value":"IMPRESS PFG030/2 02"
+        },
+        {
+            "type":"Mastering SID Code",
+            "description":"CD2",
+            "value":"IFPI L135"
+        },
+        {
+            "type":"Mould SID Code",
+            "description":"CD2",
+            "value":"IFPI 04G0"
+        }
+    ],
+    "companies":[
+        {
+            "name":"Peacefrog Records",
+            "entity_type":"13",
+            "catno":"",
+            "resource_url":"https://api.discogs.com/labels/253",
+            "id":253,
+            "entity_type_name":"Phonographic Copyright (p)"
+        },
+        {
+            "name":"Peacefrog Records",
+            "entity_type":"14",
+            "catno":"",
+            "resource_url":"https://api.discogs.com/labels/253",
+            "id":253,
+            "entity_type_name":"Copyright (c)"
+        }
+    ],
+    "uri":"https://www.discogs.com/Plaid-Plaid-Remixes-Parts-In-The-Post/release/126077",
+    "formats":[
+        {
+            "descriptions":[
+                "Compilation"
+            ],
+            "name":"CD",
+            "qty":"2"
+        }
+    ],
+    "resource_url":"https://api.discogs.com/releases/126077",
+    "data_quality":"Correct"
+}
