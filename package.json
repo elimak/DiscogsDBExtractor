@@ -87,7 +87,10 @@
     }
   },
   "dependencies": {
+    "dotenv": "^2.0.0",
     "mongoose": "^4.5.2",
+    "nodemailer": "^2.5.0",
+    "cron": "^1.1.0",
     "babel-core": "^6.5.2",
     "babel-loader": "^6.2.1",
     "babel-plugin-add-module-exports": "^0.1.2",
