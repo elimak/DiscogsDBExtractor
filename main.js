@@ -1,2 +1,2 @@
-require('bin/api');
-require('bin/server');
+require('./bin/api');
+require('./bin/server');
