@@ -1,2 +1,2 @@
-web: node bin/server.js
+web: main.js
 clock:  node scheduler/clock.js
