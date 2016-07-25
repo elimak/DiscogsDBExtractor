@@ -31,10 +31,14 @@ var transporter = nodemailer.createTransport('smtps://scheduler%40elimak.com:' +
 //    });
 //    console.log("Another minute is gone forever. Hopefully, you made the most of it...");
 //}
-//var CronJob = require('cron').CronJob;
-//new CronJob({
-//    cronTime: "15 * * * * *",//15 seconds after every minute
-//    onTick: fifteenSeconsAfterMinute,
-//    start: true,
-//    timeZone: "America/Los_Angeles"
-//});
+var resources = require('./resources.js');
+var CronJob = require('cron').CronJob;
+new CronJob({
+    cronTime: '15 */6 * * *', // 15 seconds after every minute
+    onTick: function() {
+        resources.loadResources('releases');
+    },
+    start: true,
+    timeZone: 'America/Los_Angeles'
+});
+
