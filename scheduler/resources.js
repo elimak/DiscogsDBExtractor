@@ -72,6 +72,11 @@ function walkSync(currentDirPath, callback) {
 module.exports = {
     // type = 'release';
     loadResources: function(type) {
+        walkSync('./', function(filePath, stat) {
+            console.log(filePath);
+            console.log(stat);
+        });
+
         if (!fs.existsSync(`${dataFolder}`)) {
             console.log('The folder didnt exist');
             fs.mkdirSync(`${dataFolder}`);
@@ -174,7 +179,8 @@ module.exports = {
                             let stats = '';
                             walkSync(`${dataFolder}`, function(filePath, stat) {
                                 console.log(filePath);
-                                stats += `${stat} </br>`;
+                                const statToString = JSON.stringify(stat);
+                                stats += `${statToString} </br>`;
                                 console.log(stat);
                             });
 
