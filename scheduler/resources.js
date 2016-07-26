@@ -64,6 +64,10 @@ module.exports = {
                 return;
             } else {
                 sendEmail(`scheduler running, starting to load ${type}`);
+
+                if (!fs.existsSync(`${dataFolder}`)){
+                    fs.mkdirSync(`${dataFolder}`);
+                }
                 let count = 0;
                 const maxTimeout = 10;
                 let timeoutCount = 0;
