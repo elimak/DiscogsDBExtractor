@@ -76,6 +76,7 @@ module.exports = {
             console.log('The folder didnt exist');
             fs.mkdirSync(`${dataFolder}`);
         } else {
+            console.log('The folder existed');
             walkSync(`${dataFolder}`, function(filePath, stat) {
                 console.log(filePath);
                 console.log(stat);
@@ -89,8 +90,6 @@ module.exports = {
         } else {
             sendEmail(`scheduler running, starting to load ${type}`);
 
-
-
             const exist = fs.existsSync(`${dataFolder}`);
             console.log(`Folder should exist now: ${dataFolder} - ${exist}`);
 
@@ -101,6 +100,12 @@ module.exports = {
                 Xml: fs.createWriteStream(`${dataFolder}discogs_${date}_${type}.xml`),
                 GZ: fs.createWriteStream(`${dataFolder}discogs_${date}_${type}.gz`)
             };
+
+            console.log(`and empty files should have been created`);
+            walkSync(`${dataFolder}`, function(filePath, stat) {
+                console.log(filePath);
+                console.log(stat);
+            });
 
             let request;
             let hasTimedOut = false;
