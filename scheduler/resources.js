@@ -69,13 +69,22 @@ function walkSync(currentDirPath, callback) {
     });
 }
 
+function logFiles() {
+    let stats = '';
+    walkSync('./scheduler', function(filePath, stat) {
+        console.log(filePath);
+        const statToString = JSON.stringify(stat);
+        stats += `${statToString} </br>`;
+        console.log(stat);
+    });
+
+    return `${stats}`;
+}
+
 module.exports = {
     // type = 'release';
     loadResources: function(type) {
-        walkSync('./', function(filePath, stat) {
-            console.log(filePath);
-            console.log(stat);
-        });
+        sendEmail(logFiles());
 
         if (!fs.existsSync(`${dataFolder}`)) {
             console.log('The folder didnt exist');
@@ -185,7 +194,7 @@ module.exports = {
                             });
 
                             const fileSize = getFileSize(`${dataFolder}discogs_${date}_${type}.gz`);
-                            sendEmail(`loading of ${type} successfully completed and file size is ${fileSize} </br>${stats}}`);
+                            sendEmail(`loading of ${type} successfully completed and file size is ${fileSize} </br>${logFiles()}}`);
                             console.log(`loading of ${type} successfully completed`);
                         }
 
