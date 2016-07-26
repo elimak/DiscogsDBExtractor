@@ -72,111 +72,118 @@ function walkSync(currentDirPath, callback) {
 module.exports = {
     // type = 'release';
     loadResources: function(type) {
-        walkSync(`${dataFolder}`, function(filePath, stat) {
-            console.log(filePath);
-            console.log(stat);
-        });
+        if (!fs.existsSync(`${dataFolder}`)) {
+            console.log('The folder didnt exist');
+            fs.mkdirSync(`${dataFolder}`);
+        } else {
+            walkSync(`${dataFolder}`, function(filePath, stat) {
+                console.log(filePath);
+                console.log(stat);
+            });
+        }
 
-        fs.exists(`${dataFolder}${date}_${type}.txt`, function(exists) {
-            if (exists) {
-                const fileSize = getFileSize(`${dataFolder}discogs_${date}_${type}.gz`);
-                sendEmail(`scheduler running, but file for ${type} already existing and is: ${fileSize} megabytes`);
-                console.log('The file already exists');
-                return;
-            } else {
-                sendEmail(`scheduler running, starting to load ${type}`);
+        if (fs.existsSync(`${dataFolder}${date}_${type}.txt`)) {
+            const fileSize = getFileSize(`${dataFolder}discogs_${date}_${type}.gz`);
+            sendEmail(`scheduler running, but file for ${type} already existing and is: ${fileSize} megabytes`);
+            console.log('The file already exists');
+        } else {
+            sendEmail(`scheduler running, starting to load ${type}`);
 
-                if (!fs.existsSync(`${dataFolder}`)) {
-                    fs.mkdirSync(`${dataFolder}`);
-                }
 
-                const exist = fs.existsSync(`${dataFolder}`);
-                console.log(`Folder should exist now: ${dataFolder} - ${exist}`);
 
-                let count = 0;
-                const maxTimeout = 10;
-                let timeoutCount = 0;
-                const streams = {
-                    Xml: fs.createWriteStream(`${dataFolder}discogs_${date}_${type}.xml`),
-                    GZ: fs.createWriteStream(`${dataFolder}discogs_${date}_${type}.gz`)
-                };
+            const exist = fs.existsSync(`${dataFolder}`);
+            console.log(`Folder should exist now: ${dataFolder} - ${exist}`);
 
-                let request;
-                let hasTimedOut = false;
+            let count = 0;
+            const maxTimeout = 10;
+            let timeoutCount = 0;
+            const streams = {
+                Xml: fs.createWriteStream(`${dataFolder}discogs_${date}_${type}.xml`),
+                GZ: fs.createWriteStream(`${dataFolder}discogs_${date}_${type}.gz`)
+            };
 
-                options.path = `/data/discogs_20160601_${type}.xml.gz`;
+            let request;
+            let hasTimedOut = false;
 
-                function startLoading() {
-                    hasTimedOut = false;
-                    request = getRequest();
+            options.path = `/data/discogs_20160601_${type}.xml.gz`;
 
-                    request.on('error', function(err) {
+            function startLoading() {
+                hasTimedOut = false;
+                request = getRequest();
+
+                request.on('error', function(err) {
+                    console.log('err', err);
+                });
+
+                request.setTimeout(40000, function() {
+                    request.abort();
+                    timeoutCount ++;
+                    hasTimedOut = true;
+                });
+
+                request.end();
+            }
+
+            function getRequest() {
+                return http.get(options, function(res) {
+                    res.pipe(streams.GZ, {end: false});
+                    res.pipe(zlib.createGunzip(), {end: false}).pipe(streams.Xml);
+
+                    res.on('data', function() {
+                        count++;
+                        if (count % 100 === 0) {
+                            console.log('downloading ' + count / 100);
+                        }
+                    });
+
+                    res.on('error', function(err) {
                         console.log('err', err);
                     });
 
-                    request.setTimeout(40000, function() {
-                        request.abort();
-                        timeoutCount ++;
-                        hasTimedOut = true;
-                    });
-
-                    request.end();
-                }
-
-                function getRequest() {
-                    return http.get(options, function(res) {
-                        res.pipe(streams.GZ, {end: false});
-                        res.pipe(zlib.createGunzip(), {end: false}).pipe(streams.Xml);
-
-                        res.on('data', function() {
-                            count++;
-                            if (count % 100 === 0) {
-                                console.log('downloading ' + count / 100);
-                            }
-                        });
-
-                        res.on('error', function(err) {
-                            console.log('err', err);
-                        });
-
-                        res.on('end', function(err) {
-                            if (err) {
+                    res.on('end', function(err) {
+                        if (err) {
+                            fs.unlink(`${dataFolder}discogs_${date}_${type}.gz`);
+                            fs.unlink(`${dataFolder}discogs_${date}_${type}.xml`);
+                            sendEmail(`An error has happened while loading the ${type}`);
+                            console.log(err);
+                        } else if (hasTimedOut) {
+                            const fileSize = getFileSize(`${dataFolder}discogs_${date}_${type}.gz`);
+                            largerFileSize = fileSize > largerFileSize ? fileSize : largerFileSize;
+                            console.log(`timed out and aborted restart, fileSize: ${fileSize} and larger fileSize: ${largerFileSize}`);
+                            if (timeoutCount < maxTimeout) {
+                                count = 0;
+                                startLoading();
+                            } else {
                                 fs.unlink(`${dataFolder}discogs_${date}_${type}.gz`);
                                 fs.unlink(`${dataFolder}discogs_${date}_${type}.xml`);
-                                sendEmail(`An error has happened while loading the ${type}`);
-                                console.log(err);
-                            } else if (hasTimedOut) {
-                                const fileSize = getFileSize(`${dataFolder}discogs_${date}_${type}.gz`);
-                                largerFileSize = fileSize > largerFileSize ? fileSize : largerFileSize;
-                                console.log(`timed out and aborted restart, fileSize: ${fileSize} and larger fileSize: ${largerFileSize}`);
-                                if (timeoutCount < maxTimeout) {
-                                    count = 0;
-                                    startLoading();
-                                } else {
-                                    fs.unlink(`${dataFolder}discogs_${date}_${type}.gz`);
-                                    fs.unlink(`${dataFolder}discogs_${date}_${type}.xml`);
-                                    sendEmail(`Every attempts to download the ${type} timed out :( - larger fileSize was ${largerFileSize}`);
-                                }
-                            } else {
-                                fs.writeFile(`${dataFolder}${date}_${type}.txt`, 'completed', function(err) {
-                                    if (err) {
-                                        sendEmail('Could not write the completed log file');
-                                        return console.log(err);
-                                    }
-                                });
-                                const fileSize = getFileSize(`${dataFolder}discogs_${date}_${type}.gz`);
-                                sendEmail(`loading of ${type} successfully completed and file size is ${fileSize}`);
-                                console.log(`loading of ${type} successfully completed`);
+                                sendEmail(`Every attempts to download the ${type} timed out :( - larger fileSize was ${largerFileSize}`);
                             }
+                        } else {
+                            fs.writeFile(`${dataFolder}${date}_${type}.txt`, 'completed', function(err) {
+                                if (err) {
+                                    sendEmail('Could not write the completed log file');
+                                    return console.log(err);
+                                }
+                            });
 
-                            // processXml();
-                        });
+                            let stats = '';
+                            walkSync(`${dataFolder}`, function(filePath, stat) {
+                                console.log(filePath);
+                                stats += `${stat} </br>`;
+                                console.log(stat);
+                            });
+
+                            const fileSize = getFileSize(`${dataFolder}discogs_${date}_${type}.gz`);
+                            sendEmail(`loading of ${type} successfully completed and file size is ${fileSize} </br>${stats}}`);
+                            console.log(`loading of ${type} successfully completed`);
+                        }
+
+                        // processXml();
                     });
-                }
-
-                startLoading();
+                });
             }
-        });
+            startLoading();
+        }
 
     }
 };
