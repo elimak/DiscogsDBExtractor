@@ -54,9 +54,29 @@ function getFileSize(file) {
     return fileSizeInBytes / 1000000.0;
 }
 
+// walk through folder
+function walkSync(currentDirPath, callback) {
+    let fs = require('fs');
+    let path = require('path');
+    fs.readdirSync(currentDirPath).forEach(function(name) {
+        let filePath = path.join(currentDirPath, name);
+        let stat = fs.statSync(filePath);
+        if (stat.isFile()) {
+            callback(filePath, stat);
+        } else if (stat.isDirectory()) {
+            walkSync(filePath, callback);
+        }
+    });
+}
+
 module.exports = {
     // type = 'release';
     loadResources: function(type) {
+        walkSync(`${dataFolder}`, function(filePath, stat) {
+            console.log(filePath);
+            console.log(stat);
+        });
+
         fs.exists(`${dataFolder}${date}_${type}.txt`, function(exists) {
             if (exists) {
                 const fileSize = getFileSize(`${dataFolder}discogs_${date}_${type}.gz`);

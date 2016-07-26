@@ -35,7 +35,7 @@ var resources = require('./resources.js');
 var CronJob = require('cron').CronJob;
 new CronJob({
     // cronTime: '15 * * * * *', // 15 seconds after every minute
-    cronTime: '15 */1 * * *', // 15 seconds after every minute
+    cronTime: '30 */1 * * *', // 15 seconds after every minute
     onTick: function() {
         resources.loadResources('releases');
     },
