@@ -69,6 +69,10 @@ module.exports = {
                 if (!fs.existsSync(`${dataFolder}`)) {
                     fs.mkdirSync(`${dataFolder}`);
                 }
+
+                const exist = fs.existsSync(${dataFolder});
+                console.log(`Folder should exist now: ${dataFolder} - ${exist}`);
+
                 let count = 0;
                 const maxTimeout = 10;
                 let timeoutCount = 0;
