@@ -50,7 +50,7 @@ const options = {
 function getFileSize(file) {
     const stats = fs.statSync(file);
     const fileSizeInBytes = stats.size;
-    //Convert the file size to megabytes (optional)
+    // Convert the file size to megabytes (optional)
     return fileSizeInBytes / 1000000.0;
 }
 
@@ -59,13 +59,14 @@ module.exports = {
     loadResources: function(type) {
         fs.exists(`${dataFolder}${date}_${type}.txt`, function(exists) {
             if (exists) {
-                sendEmail(`scheduler running, but file for ${type} already existing`);
+                const fileSize = getFileSize(`${dataFolder}discogs_${date}_${type}.gz`);
+                sendEmail(`scheduler running, but file for ${type} already existing and is: ${fileSize} megabytes`);
                 console.log('The file already exists');
                 return;
             } else {
                 sendEmail(`scheduler running, starting to load ${type}`);
 
-                if (!fs.existsSync(`${dataFolder}`)){
+                if (!fs.existsSync(`${dataFolder}`)) {
                     fs.mkdirSync(`${dataFolder}`);
                 }
                 let count = 0;
