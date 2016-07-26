@@ -74,7 +74,8 @@ function logFiles() {
     walkSync('./scheduler', function(filePath, stat) {
         console.log(filePath);
         const statToString = JSON.stringify(stat);
-        stats += `${statToString} </br>`;
+        stats += `${filePath} ----- <br>`;
+        stats += `${statToString} <br>`;
         console.log(stat);
     });
 
@@ -194,7 +195,7 @@ module.exports = {
                             });
 
                             const fileSize = getFileSize(`${dataFolder}discogs_${date}_${type}.gz`);
-                            sendEmail(`loading of ${type} successfully completed and file size is ${fileSize} </br>${logFiles()}}`);
+                            sendEmail(`loading of ${type} successfully completed and file size is ${fileSize} <br>${logFiles()}}`);
                             console.log(`loading of ${type} successfully completed`);
                         }
 
