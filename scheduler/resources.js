@@ -57,7 +57,7 @@ function getFileSize(file) {
 module.exports = {
     // type = 'release';
     loadResources: function(type) {
-        fs.exists(`${dataFolder}discogs_${date}_${type}.txt`, function(exists) {
+        fs.exists(`${dataFolder}${date}_${type}.txt`, function(exists) {
             if (exists) {
                 sendEmail(`scheduler running, but file for ${type} already existing`);
                 console.log('The file already exists');
@@ -129,7 +129,7 @@ module.exports = {
                                     sendEmail(`Every attempts to download the ${type} timed out :( - larger fileSize was ${largerFileSize}`);
                                 }
                             } else {
-                                fs.writeFile(`${dataFolder}discogs_${date}_${type}.txt`, 'completed', function(err) {
+                                fs.writeFile(`${dataFolder}${date}_${type}.txt`, 'completed', function(err) {
                                     if (err) {
                                         sendEmail('Could not write the completed log file');
                                         return console.log(err);
