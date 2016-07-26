@@ -70,7 +70,7 @@ module.exports = {
                     fs.mkdirSync(`${dataFolder}`);
                 }
 
-                const exist = fs.existsSync(${dataFolder});
+                const exist = fs.existsSync(`${dataFolder}`);
                 console.log(`Folder should exist now: ${dataFolder} - ${exist}`);
 
                 let count = 0;
@@ -144,7 +144,8 @@ module.exports = {
                                         return console.log(err);
                                     }
                                 });
-                                sendEmail(`loading of ${type} successfully completed`);
+                                const fileSize = getFileSize(`${dataFolder}discogs_${date}_${type}.gz`);
+                                sendEmail(`loading of ${type} successfully completed and file size is ${fileSize}`);
                                 console.log(`loading of ${type} successfully completed`);
                             }
 
