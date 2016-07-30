@@ -1,5 +1,6 @@
-"use strict";
+'use strict';
 const nodemailer = require('nodemailer');
+const updateDB = require('./updateDB.js');
 // create reusable transporter object using the default SMTP transport
 const transporter = nodemailer.createTransport('smtps://scheduler%40elimak.com:' + process.env.MAIL_PWD + '@smtp.gmail.com');
 
@@ -84,7 +85,7 @@ function logFiles() {
 
 module.exports = {
     // type = 'release';
-    loadResources: function(type) {
+    loadResources: function(type, completed) {
         sendEmail(logFiles());
 
         if (!fs.existsSync(`${dataFolder}`)) {
@@ -199,12 +200,12 @@ module.exports = {
                             console.log(`loading of ${type} successfully completed`);
                         }
 
+                        updateDB[type](`${dataFolder}discogs_${date}_${type}.xml`, completed);
                         // processXml();
                     });
                 });
             }
             startLoading();
         }
-
     }
 };

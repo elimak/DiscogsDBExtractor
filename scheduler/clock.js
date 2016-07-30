@@ -1,5 +1,10 @@
 require('dotenv').config({ silent: true });
 var nodemailer = require('nodemailer');
+var updateDB = require('./updateDB.js');
+var resources = require('./resources.js');
+var connectDB = require('./connectDB.js');
+var CronJob = require('cron').CronJob;
+
 
 // create reusable transporter object using the default SMTP transport
 var transporter = nodemailer.createTransport('smtps://scheduler%40elimak.com:' + process.env.MAIL_PWD + '@smtp.gmail.com');
@@ -31,14 +36,28 @@ var transporter = nodemailer.createTransport('smtps://scheduler%40elimak.com:' +
 //    });
 //    console.log("Another minute is gone forever. Hopefully, you made the most of it...");
 //}
-var resources = require('./resources.js');
-var CronJob = require('cron').CronJob;
+
+function loadResource() {
+    resources.loadResources('releases', function() {
+        console.log('process completed');
+    });
+}
+
+function processRelease() {
+    connectDB.connectMongo();
+    console.log('process started');
+    var dataFolder = './scheduler/data/';
+    //updateDB.releases(`${dataFolder}discogs_20160701_releases.xml`, function() {
+    updateDB.releases(`${dataFolder}test.xml`, function() {
+        console.log('callback competed');
+    });
+}
+
 new CronJob({
-     //cronTime: '15 * * * * *', // 15 seconds after every minute
-    cronTime: '1 */6 * * *', // 15 seconds after every minute
-    onTick: function() {
-        resources.loadResources('releases');
-    },
+     cronTime: '0 * * * * *', // 15 seconds after every minute
+    //cronTime: '1 */6 * * *', // 15 seconds after every minute
+    onTick: processRelease,
+    //onTick: loadResource,
     start: true,
     timeZone: 'America/Los_Angeles'
 });
