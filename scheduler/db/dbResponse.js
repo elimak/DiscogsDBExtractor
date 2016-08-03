@@ -1,4 +1,4 @@
 module.exports = {
-    error: function(msg) { return { error: msg }},
-    success: function(msg) { return { success: msg }}
+    error: function(msg, id) { return { error: msg, id: id } },
+    success: function(msg) { return { success: msg } }
 };

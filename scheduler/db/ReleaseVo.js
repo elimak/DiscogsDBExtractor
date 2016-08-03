@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 
 const masterVOSchema = new Schema({
     country: { type: String },
-    master_id: { type: Number },
+    master_id: { type: Number, default: -1 },
     title: { type: String, required: true },
     released: { type: String },
     id: { type: Number, required: true, unique: true },

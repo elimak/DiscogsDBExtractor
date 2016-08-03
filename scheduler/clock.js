@@ -39,7 +39,7 @@ var transporter = nodemailer.createTransport('smtps://scheduler%40elimak.com:' +
 
 function loadResource() {
     resources.loadResources('releases', function() {
-        console.log('process completed');
+        console.log('------ loading completed');
     });
 }
 
@@ -49,12 +49,12 @@ function processRelease() {
     var dataFolder = './scheduler/data/';
     //updateDB.releases(`${dataFolder}discogs_20160701_releases.xml`, function() {
     updateDB.releases(`${dataFolder}test.xml`, function() {
-        console.log('callback competed');
+        console.log('callback completed');
     });
 }
 
 new CronJob({
-     cronTime: '0 * * * * *', // 15 seconds after every minute
+    cronTime: '29 * * * *', // 15 seconds after every minute
     //cronTime: '1 */6 * * *', // 15 seconds after every minute
     onTick: processRelease,
     //onTick: loadResource,

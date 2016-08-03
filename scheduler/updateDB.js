@@ -6,8 +6,9 @@ const fs = require('fs');
 const saxpath = require('saxpath');
 const sax = require('sax');
 
-function processXml(file, type, savingFunction, completed) {
-    console.log('processXml');
+let completeCallBack;
+
+function processXml(file, type, savingFunction) {
     const fileStream = fs.createReadStream(file);
     const saxParser = sax.createStream(true);
     const streamer = new saxpath.SaXPath(saxParser, `//${type}`);
@@ -18,7 +19,9 @@ function processXml(file, type, savingFunction, completed) {
     });
 
     fileStream.pipe(saxParser);
-    fileStream.on('close', completed);
+    fileStream.on('close', function() {
+        console.log('----- XML parsed -----');
+    });
 }
 
 function cleanUpXML(xml) {
@@ -31,7 +34,10 @@ function cleanUpXML(xml) {
 }
 
 function getContent(cleanedXML, tag) {
-    return `${cleanedXML.split(`</${tag}>`)[0]}`.split(`<${tag}>`)[1];
+    if (cleanedXML.split(`</${tag}>`).length) {
+        return `${cleanedXML.split(`</${tag}>`)[0]}`.split(`<${tag}>`)[1];
+    }
+    return null;
 }
 
 function getID(cleanedXML) {
@@ -105,12 +111,11 @@ function getFormats(cleanedXML) {
 }
 
 function saveRelease(xml) {
-    console.log('--- matched XML ---');
     const cleanedXML = cleanUpXML(xml);
 
     const schema = {
         country: getContent(cleanedXML, 'country'),
-        master_id: getContent(cleanedXML, 'master_id'),
+        master_id: (getContent(cleanedXML, 'master_id') || -1),
         title: getContent(cleanedXML, 'title'),
         released: getContent(cleanedXML, 'released'),
         id: getID(cleanedXML),
@@ -122,14 +127,15 @@ function saveRelease(xml) {
         label_names: getLabelNames(cleanedXML),
         label_cats: getLabelCats(cleanedXML)
     };
-    console.log(JSON.stringify(schema));
-    releasesAPI.addReleaseToDB(schema);
+    releasesAPI.addReleaseToDB(schema, completeCallBack);
 }
 
 module.exports = {
     // type = 'release';
     releases: function(file, completed) {
-        releasesAPI.logAll();
-        //processXml(file, 'release', saveRelease, completed);
+        // releasesAPI.logAll();
+        completeCallBack = completed;
+        releasesAPI.resetLogs();
+        processXml(file, 'release', saveRelease);
     }
 };
