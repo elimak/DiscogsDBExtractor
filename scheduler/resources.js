@@ -1,9 +1,8 @@
 'use strict';
-var connectDB = require('./connectDB.js');
-var updateDB = require('./updateDB.js');
+const connectDB = require('./connectDB.js');
+const updateDB = require('./updateDB.js');
 
 const nodemailer = require('nodemailer');
-const updateDB = require('./updateDB.js');
 // create reusable transporter object using the default SMTP transport
 const transporter = nodemailer.createTransport('smtps://scheduler%40elimak.com:' + process.env.MAIL_PWD + '@smtp.gmail.com');
 

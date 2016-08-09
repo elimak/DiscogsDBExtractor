@@ -55,7 +55,7 @@ function loadResource() {
 }
 
 new CronJob({
-    cronTime: '53 * * * *', // 15 seconds after every minute
+    cronTime: '0 * * * *', // 15 seconds after every minute
     //cronTime: '1 */6 * * *', // 15 seconds after every minute
     //onTick: processRelease,
     onTick: loadResource,
