@@ -7,6 +7,8 @@ let ids = {};
 let failed = {};
 let completeCallBack;
 
+let logs = '';
+
 function all() {
     return new Promise((resolve) => {
         ReleaseVO.find({}, (err, data) => {
@@ -36,6 +38,7 @@ function update(_id, data) {
         ReleaseVO.findByIdAndUpdate(_id, data, function(err, newData) {
             if (err) {
                 console.log('--- update error ?', data.id, err);
+                logs += 'update error' + data.id + ': ' + err + '<br>';
                 resolve(error(err, data.id));
             } else {
                 resolve(success(newData));
@@ -50,6 +53,7 @@ function save(data) {
         release.save(function(err, newData) {
             if (err) {
                 console.log('--- save error ?', data.id, err);
+                logs += 'save error' + data.id + ': ' + err + '<br>';
                 resolve(error(err, data.id));
             } else {
                 resolve(success(newData));
@@ -61,11 +65,13 @@ function save(data) {
 function finalize(result) {
     if (result.success) {
         console.log('saved', result.success.id);
+        logs += 'saved' + result.id + '<br>';
         delete ids[result.success.id];
     }
 
     if (result.error) {
         console.log('error saving', result.id);
+        logs += 'saved' + result.id + '<br>';
         delete ids[result.id];
         failed[result.id] = true;
     }
