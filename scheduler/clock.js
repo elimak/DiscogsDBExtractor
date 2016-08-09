@@ -37,27 +37,28 @@ var transporter = nodemailer.createTransport('smtps://scheduler%40elimak.com:' +
 //    console.log("Another minute is gone forever. Hopefully, you made the most of it...");
 //}
 
+
+//function processRelease() {
+//    connectDB.connectMongo();
+//    console.log('process started');
+//    var dataFolder = './scheduler/data/';
+//    updateDB.releases(`${dataFolder}discogs_20160701_releases.xml`, function() {
+//    //updateDB.releases(`${dataFolder}test.xml`, function() {
+//        console.log('callback completed');
+//    });
+//}
+
 function loadResource() {
     resources.loadResources('releases', function() {
         console.log('------ loading completed');
     });
 }
 
-function processRelease() {
-    connectDB.connectMongo();
-    console.log('process started');
-    var dataFolder = './scheduler/data/';
-    //updateDB.releases(`${dataFolder}discogs_20160701_releases.xml`, function() {
-    updateDB.releases(`${dataFolder}test.xml`, function() {
-        console.log('callback completed');
-    });
-}
-
 new CronJob({
-    cronTime: '29 * * * *', // 15 seconds after every minute
+    cronTime: '53 * * * *', // 15 seconds after every minute
     //cronTime: '1 */6 * * *', // 15 seconds after every minute
-    onTick: processRelease,
-    //onTick: loadResource,
+    //onTick: processRelease,
+    onTick: loadResource,
     start: true,
     timeZone: 'America/Los_Angeles'
 });

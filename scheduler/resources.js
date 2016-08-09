@@ -1,4 +1,7 @@
 'use strict';
+var connectDB = require('./connectDB.js');
+var updateDB = require('./updateDB.js');
+
 const nodemailer = require('nodemailer');
 const updateDB = require('./updateDB.js');
 // create reusable transporter object using the default SMTP transport
@@ -200,8 +203,12 @@ module.exports = {
                             console.log(`loading of ${type} successfully completed`);
                         }
 
-                        updateDB[type](`${dataFolder}discogs_${date}_${type}.xml`, completed);
-                        // processXml();
+                        connectDB.connectMongo();
+                        updateDB[type](`${dataFolder}discogs_${date}_${type}.xml`, function() {
+                            console.log('callback completed');
+                            sendEmail(`updated DB ${type} completed`);
+                            completed();
+                        });
                     });
                 });
             }
