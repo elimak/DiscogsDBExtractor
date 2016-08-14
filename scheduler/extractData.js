@@ -1,33 +1,36 @@
-'use strict';
-const nodemailer = require('nodemailer');
-const releasesAPI = require('./db/releasesAPI.js');
+import emailer from './emailer';
 
-const fs = require('fs');
-const saxpath = require('saxpath');
-const sax = require('sax');
+import fs from 'fs';
+import saxpath from 'saxpath';
+import sax from 'sax';
 
-let completeCallBack;
+const dataFolder = './scheduler/data/';
+let schemas = [];
 
-function processXml(file, type, savingFunction) {
-    const fileStream = fs.createReadStream(file);
-    const saxParser = sax.createStream(true);
-    const streamer = new saxpath.SaXPath(saxParser, `//${type}`);
+function processXml(fileName, type, savingFunction) {
+    return new Promise((resolve, reject) => {
+        const fileStream = fs.createReadStream(`${dataFolder}${fileName}`);
+        const saxParser = sax.createStream(true);
+        const streamer = new saxpath.SaXPath(saxParser, `//${type}`);
 
-    streamer.on('match', savingFunction);
-    streamer.on('error', function() {
-        console.log('there was an error parsing the xml');
-    });
+        streamer.on('match', savingFunction);
+        streamer.on('error', () => {
+            reject('there was an error parsing the xml');
+            console.log('there was an error parsing the xml');
+        });
 
-    fileStream.pipe(saxParser);
-    fileStream.on('close', function() {
-        console.log('----- XML parsed -----');
+        fileStream.pipe(saxParser);
+        fileStream.on('close', () => {
+            console.log('----- XML parsed -----');
+            resolve(schemas);
+        });
     });
 }
 
 function cleanUpXML(xml) {
     const tags = ['tracklist', 'companies', 'notes', 'images', 'videos', 'identifiers'];
     let cleanedXML = `${xml}`;
-    tags.forEach(function(tag) {
+    tags.forEach((tag) => {
         cleanedXML = `${cleanedXML.split(`<${tag}>`)[0]}${cleanedXML.split(`</${tag}>`)[1]}`;
     });
     return cleanedXML;
@@ -48,7 +51,7 @@ function getLabelNames(cleanedXML) {
     const labels = getContent(cleanedXML, 'labels');
     const nodes = labels.split('<label');
     const result = [];
-    nodes.forEach(function(node) {
+    nodes.forEach((node) => {
         const name = node.split('name="')[1];
         if (name) result.push(name.split('"')[0]);
     });
@@ -59,7 +62,7 @@ function getLabelCats(cleanedXML) {
     const labels = getContent(cleanedXML, 'labels');
     const nodes = labels.split('<label');
     const result = [];
-    nodes.forEach(function(node) {
+    nodes.forEach((node) => {
         const catno = node.split('catno="')[1];
         if (catno) result.push(catno.split('"')[0]);
     });
@@ -70,7 +73,7 @@ function getArtists(cleanedXML, tag) {
     const artists = getContent(cleanedXML, tag);
     const nodes = artists.split('</artist>');
     const result = [];
-    nodes.forEach(function(node) {
+    nodes.forEach((node) => {
         const id = getContent(node, 'id');
         if (id) result.push(id);
     });
@@ -81,7 +84,7 @@ function getStyles(cleanedXML) {
     const styles = getContent(cleanedXML, 'styles');
     const nodes = styles.split('</style>');
     const result = [];
-    nodes.forEach(function(node) {
+    nodes.forEach((node) => {
         const style = getContent(`${node}</style>`, 'style');
         if (style) result.push(style);
     });
@@ -92,7 +95,7 @@ function getGenres(cleanedXML) {
     const genres = getContent(cleanedXML, 'genres');
     const nodes = genres.split('</genre>');
     const result = [];
-    nodes.forEach(function(node) {
+    nodes.forEach((node) => {
         const genre = getContent(`${node}</genre>`, 'genre');
         if (genre) result.push(genre);
     });
@@ -103,7 +106,7 @@ function getFormats(cleanedXML) {
     const formats = getContent(cleanedXML, 'formats');
     const nodes = formats.split('</format>');
     const result = [];
-    nodes.forEach(function(node) {
+    nodes.forEach((node) => {
         const format = node.split('name="')[1];
         if (format) result.push(format.split('" qty')[0]);
     });
@@ -127,15 +130,29 @@ function saveRelease(xml) {
         label_names: getLabelNames(cleanedXML),
         label_cats: getLabelCats(cleanedXML)
     };
-    releasesAPI.addReleaseToDB(schema, completeCallBack);
+    console.log(schemas.length);
+    schemas.push(schema);
 }
 
-module.exports = {
+export default {
     // type = 'release';
-    releases: function(file, completed) {
-        // releasesAPI.logAll();
-        completeCallBack = completed;
-        releasesAPI.resetLogs();
-        processXml(file, 'release', saveRelease);
+    releases: (fileName) => {
+        schemas = [];
+        return new Promise((resolve, reject) => {
+            processXml(fileName, 'release', saveRelease)
+                .then((resolved, rejected) => {
+                    if (resolved) {
+                        resolve({
+                            fileName,
+                            schemas
+                        });
+                    } else if (rejected) {
+                        reject({
+                            fileName,
+                            rejectedMsg: rejected
+                        });
+                    }
+                });
+        });
     }
 };

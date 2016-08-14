@@ -26,28 +26,28 @@ function getFileSize(file) {
 }
 
 // walk through folder
-function walkSync(currentDirPath, callback) {
-    fs.readdirSync(currentDirPath).forEach((name) => {
-        const filePath = path.join(currentDirPath, name);
-        const stat = fs.statSync(filePath);
-        if (stat.isFile()) {
-            callback(filePath, stat);
-        } else if (stat.isDirectory()) {
-            walkSync(filePath, callback);
-        }
-    });
-}
-
-function logFiles() {
-    let stats = '';
-    walkSync('./scheduler', (filePath, stat) => {
-        const statToString = JSON.stringify(stat);
-        stats += `${filePath} ----- <br>`;
-        stats += `${statToString} <br>`;
-    });
-
-    return `${stats}`;
-}
+// function walkSync(currentDirPath, callback) {
+//    fs.readdirSync(currentDirPath).forEach((name) => {
+//        const filePath = path.join(currentDirPath, name);
+//        const stat = fs.statSync(filePath);
+//        if (stat.isFile()) {
+//            callback(filePath, stat);
+//        } else if (stat.isDirectory()) {
+//            walkSync(filePath, callback);
+//        }
+//    });
+// }
+//
+// function logFiles() {
+//    let stats = '';
+//    walkSync('./scheduler', (filePath, stat) => {
+//        const statToString = JSON.stringify(stat);
+//        stats += `${filePath} ----- <br>`;
+//        stats += `${statToString} <br>`;
+//    });
+//
+//    return `${stats}`;
+// }
 
 function _checkCreateFolder() {
     if (!fs.existsSync(`${dataFolder}`)) {
@@ -83,7 +83,7 @@ function load(fileName) {
             res.pipe(streams.GZ, {end: false});
             res.pipe(zlib.createGunzip(), {end: false}).pipe(streams.Xml);
 
-            res.on('data', function() {
+            res.on('data', () => {
                 count++;
                 if (count % 100 === 0) {
                     console.log('downloading ' + count / 100);
@@ -110,14 +110,8 @@ function load(fileName) {
                         reject(`Every attempts to download the ${fileName} timed out :( - larger fileSize was ${largerFileSize}`);
                     }
                 } else {
-                    let stats = '';
-                    walkSync(`${dataFolder}`, (filePath, stat) => {
-                        const statToString = JSON.stringify(stat);
-                        stats += `${statToString} </br>`;
-                    });
-
                     const fileSize = getFileSize(`${dataFolder}${fileName}`);
-                    resolve(`loading of ${fileName} successfully completed and file size is ${fileSize} <br>${logFiles()}}`);
+                    resolve(`loading of ${fileName} successfully completed and file size is ${fileSize}}`);
                 }
             });
         });
