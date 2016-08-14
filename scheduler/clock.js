@@ -1,13 +1,13 @@
 require('dotenv').config({ silent: true });
-var nodemailer = require('nodemailer');
-var updateDB = require('./updateDB.js');
-var resources = require('./resources.js');
-var connectDB = require('./connectDB.js');
-var CronJob = require('cron').CronJob;
-
+//var nodemailer = require('nodemailer');
+//var updateDB = require('./updateDB.js');
+//var resources = require('./resources.js');
+//var connectDB = require('./connectDB.js');
+//var CronJob = require('cron').CronJob;
+//var emailer = require('./emailer.js');
 
 // create reusable transporter object using the default SMTP transport
-var transporter = nodemailer.createTransport('smtps://scheduler%40elimak.com:' + process.env.MAIL_PWD + '@smtp.gmail.com');
+//var transporter = nodemailer.createTransport('smtps://scheduler%40elimak.com:' + process.env.MAIL_PWD + '@smtp.gmail.com');
 
 //OnInterval
 //var threeSecondInterval = function() {
@@ -47,19 +47,22 @@ var transporter = nodemailer.createTransport('smtps://scheduler%40elimak.com:' +
 //        console.log('callback completed');
 //    });
 //}
+//
+//function loadResource() {
+//    resources.loadResources('releases', function() {
+//        console.log('------ loading completed');
+//    });
+//}
+//
+//new CronJob({
+//    // cronTime: '20 * * * *', // 15 seconds after every minute
+//    cronTime: '1 */6 * * *', // 2 times a day
+//    //onTick: processRelease,
+//    onTick: loadResource,
+//    start: true,
+//    timeZone: 'America/Los_Angeles'
+//});
+//
 
-function loadResource() {
-    resources.loadResources('releases', function() {
-        console.log('------ loading completed');
-    });
-}
-
-new CronJob({
-    // cronTime: '20 * * * *', // 15 seconds after every minute
-    cronTime: '1 */6 * * *', // 2 times a day
-    //onTick: processRelease,
-    onTick: loadResource,
-    start: true,
-    timeZone: 'America/Los_Angeles'
-});
-
+require('../server.babel'); // babel registration (runtime transpilation for node)
+require('./cron');
