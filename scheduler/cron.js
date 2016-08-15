@@ -70,6 +70,7 @@ function _queueLoading(listOfDumps) {
 }
 
 function _process() {
+    console.log('_process');
     discogsFileList()
         .then((listOfDumps) => {
             _queueLoading(listOfDumps);
@@ -78,7 +79,7 @@ function _process() {
 
 
 new CronJob({
-    cronTime: '34 * * * *', // 15 seconds after every minute
+    cronTime: '39 * * * *', // 15 seconds after every minute
     //cronTime: '1 */6 * * *', // 2 times a day
     //onTick: processRelease,
     //onTick: loadResource,
