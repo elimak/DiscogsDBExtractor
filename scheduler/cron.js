@@ -4,6 +4,7 @@ import discogsFileList from './discogsFileList';
 import emailer from './emailer';
 import extractData from './extractData';
 import releasesAPI from './db/releasesAPI';
+import connectMongo from './connectMongo';
 
 let dataToSave;
 let savedCount;
@@ -50,9 +51,9 @@ function loadResource(file) {
                 console.log(resolved.resolvedMsg);
                 setTimeout(() => {
                     savedCount = 0;
-                    console.log('starting to save the records');
+                    console.log(`starting to save the records with ${dataToSave.length} stored schema`);
                     saveReleases();
-                }, 15000);
+                }, 5000);
             } else if (rejected) {
                 emailer.error(rejected.rejectedMsg);
                 console.log(rejected.rejectedMsg);
@@ -71,6 +72,7 @@ function _queueLoading(listOfDumps) {
 
 function _process() {
     console.log('_process');
+    connectMongo.connectMongo();
     discogsFileList()
         .then((listOfDumps) => {
             _queueLoading(listOfDumps);
@@ -79,7 +81,7 @@ function _process() {
 
 
 new CronJob({
-    cronTime: '41 * * * *', // 15 seconds after every minute
+    cronTime: '55 * * * *', // 15 seconds after every minute
     //cronTime: '1 */6 * * *', // 2 times a day
     //onTick: processRelease,
     //onTick: loadResource,

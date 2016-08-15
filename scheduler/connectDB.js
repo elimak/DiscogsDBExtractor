@@ -1,5 +1,5 @@
-'use strict';
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+mongoose.Promise = global.Promise;
 let maxRetries = 5;
 let retries = 0;
 
