@@ -14,14 +14,11 @@ function all() {
 }
 
 function get_id(data) {
-    console.log('get_id', `${data.id}`);
     return new Promise((resolve) => {
         ReleaseVO.findOne({ id: data.id }, (err, newData) => {
             if (newData && newData._id) {
-                console.log('requested', data.id, 'and found ', newData._id);
                 resolve(newData._id);
             } else {
-                console.log(`${data.id}`, ' was not found, returning -1');
                 resolve(-1);
             }
         });
@@ -43,13 +40,10 @@ function update(_id, data) {
 function save(data) {
     return new Promise((resolve) => {
         const release = new ReleaseVO(data);
-        console.log('attempting to save', data.id);
         release.save((err, newData) => {
             if (err) {
-                console.log('saving failed?', data.id);
                 resolve(error(err, data.id));
             } else {
-                console.log('saving succeed?', data.id);
                 resolve(success(newData, data.id));
             }
         });
