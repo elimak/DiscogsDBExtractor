@@ -17,7 +17,7 @@ function saveReleases() {
                 if (resolved) {
                     savedCount ++;
                     if (savedCount % 100 === 0) {
-                        console.log(`So far ${savedCount} records were saved and ${dataToSave} left to process`);
+                        console.log(`So far ${savedCount} records were saved and ${dataToSave.length} left to process`);
                     }
                     saveReleases();
                 } else if (rejected) {
