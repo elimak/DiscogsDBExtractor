@@ -71,6 +71,7 @@ module.exports = {
     addReleaseToDB: (releaseData) => {
         return new Promise((resolve, reject) => {
             get_id(releaseData).then((_id, getIdErr) => {
+                console.log('get_ID', _id, getIdErr);
                 if (getIdErr) {
                     resolve({
                         error: releaseData.id,
@@ -79,6 +80,7 @@ module.exports = {
                 }
                 if (_id === -1) {
                     // save
+                    console.log('save');
                     save(releaseData)
                         .then((result, err) => {
                             if (result) {
@@ -91,6 +93,7 @@ module.exports = {
                             }
                         });
                 } else {
+                    console.log('update');
                     // update
                     update(_id, releaseData)
                         .then((result, err) => {
