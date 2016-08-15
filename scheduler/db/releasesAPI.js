@@ -17,8 +17,10 @@ function get_id(data) {
     return new Promise((resolve) => {
         ReleaseVO.findOne({ id: data.id }, (err, newData) => {
             if (newData && newData._id) {
+                console.log('requested', data.id, 'and found ', newData._id);
                 resolve(newData._id);
             } else {
+                console.log(data.id, ' was not found, returning -1');
                 resolve(-1);
             }
         });
@@ -71,9 +73,9 @@ module.exports = {
     addReleaseToDB: (releaseData) => {
         return new Promise((resolve, reject) => {
             get_id(releaseData).then((_id, getIdErr) => {
-                console.log('get_ID', JSON.stringify(releaseData), _id, getIdErr);
-                console.log('_id === -1', _id === -1);
+                console.log('_id === -1', `|${_id}|`, _id === -1);
                 console.log('_id !== -1', _id !== -1);
+                console.log('get_ID', JSON.stringify(releaseData), _id, getIdErr);
                 if (getIdErr) {
                     console.log('getIdErr');
                     resolve({
