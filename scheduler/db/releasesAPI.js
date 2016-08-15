@@ -71,7 +71,9 @@ module.exports = {
     addReleaseToDB: (releaseData) => {
         return new Promise((resolve, reject) => {
             get_id(releaseData).then((_id, getIdErr) => {
-                console.log('get_ID', releaseData, _id, getIdErr);
+                console.log('get_ID', JSON.stringify(releaseData), _id, getIdErr);
+                console.log('_id === -1', _id === -1);
+                console.log('_id !== -1', _id !== -1);
                 if (getIdErr) {
                     console.log('getIdErr');
                     resolve({
