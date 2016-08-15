@@ -57,19 +57,19 @@ function save(data) {
 }
 
 function finalize(resolve, result) {
-    console.log('finalize', resolve.success, resolve.error);
-    console.log('finalize', result);
+    console.log('finalize', resolve);
+    console.log('finalize', result.success, result.error);
     if (result.success) {
         resolve({
-            success: result.success.id,
-            successMsg: result.success.msg
+            success: result.id,
+            successMsg: result.success
         });
     }
 
     if (result.error) {
         resolve({
-            error: result.error.id,
-            errorMsg: result.error.msg
+            error: result.id,
+            errorMsg: result.error
         });
     }
 }

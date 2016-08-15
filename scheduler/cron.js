@@ -12,14 +12,17 @@ let savedCount;
 function saveReleases() {
     if (dataToSave.length) {
         const record = dataToSave.pop();
+        console.log('addReleaseToDB ', record.id);
         releasesAPI.addReleaseToDB(record)
             .then((resolved, rejected) => {
+                console.log('saved record - resolved?', resolved, rejected);
                 if (resolved) {
                     savedCount ++;
-                    saveReleases();
                     if (savedCount % 50 === 0) {
                         console.log(`So far ${savedCount} records were saved`);
                     }
+                    console.log(`saved release, calling saveReleases again`);
+                    saveReleases();
                 } else if (rejected) {
                     console.log(`${record.id} failed to enter the DB`);
                     saveReleases();
@@ -81,7 +84,7 @@ function _process() {
 
 
 new CronJob({
-    cronTime: '01 * * * *', // 15 seconds after every minute
+    cronTime: '44 * * * *', // 15 seconds after every minute
     //cronTime: '1 */6 * * *', // 2 times a day
     //onTick: processRelease,
     //onTick: loadResource,
