@@ -157,7 +157,7 @@ function saveRelease(xml, dataToSave) {
         console.log('release count', releaseCount);
     }
     dataToSave.push(schema);
-    _checkStream();
+    _checkStream(dataToSave);
 }
 
 export default {
