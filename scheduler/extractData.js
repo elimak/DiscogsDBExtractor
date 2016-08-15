@@ -6,11 +6,12 @@ import sax from 'sax';
 
 const dataFolder = './scheduler/data/';
 let releaseCount;
+let fileStream;
 
 function processXml(fileName, type, savingFunction, dataToSave) {
     return new Promise((resolve, reject) => {
         console.log('create stream with ', `${dataFolder}${fileName}`);
-        const fileStream = fs.createReadStream(`${dataFolder}${fileName}`);
+        fileStream = fs.createReadStream(`${dataFolder}${fileName}`);
         const saxParser = sax.createStream(true);
         const streamer = new saxpath.SaXPath(saxParser, `//${type}`);
 
@@ -123,6 +124,7 @@ function getFormats(cleanedXML) {
 }
 
 function saveRelease(xml, dataToSave) {
+    fileStream.pause();
     const cleanedXML = cleanUpXML(xml);
 
     const schema = {
@@ -145,6 +147,9 @@ function saveRelease(xml, dataToSave) {
         console.log('release count', releaseCount);
     }
     dataToSave.push(schema);
+    setTimeout(() => {
+        fileStream.resume();
+    }, 100);
 }
 
 export default {
