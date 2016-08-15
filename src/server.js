@@ -120,3 +120,7 @@ if (config.port) {
 } else {
     console.error('==>     ERROR: No PORT environment variable has been specified');
 }
+
+setInterval(() => {
+    http.get('http://discogs-extractor.herokuapp.com/');
+}, 600000); // every 5 minutes (300000)
