@@ -57,8 +57,6 @@ function save(data) {
 }
 
 function finalize(resolve, result) {
-    console.log('finalize', resolve);
-    console.log('finalize', result.success, result.error);
     if (result.success) {
         resolve({
             success: result.id,
@@ -79,11 +77,7 @@ module.exports = {
     addReleaseToDB: (releaseData) => {
         return new Promise((resolve) => {
             get_id(releaseData).then((_id, getIdErr) => {
-                console.log('_id === -1', `|${_id}|`, _id === -1);
-                console.log('_id !== -1', _id !== -1);
-                console.log('get_ID', JSON.stringify(releaseData), _id, getIdErr);
                 if (getIdErr) {
-                    console.log('getIdErr');
                     resolve({
                         error: releaseData.id,
                         errorMsg: getIdErr
@@ -92,7 +86,6 @@ module.exports = {
 
                 if (_id === -1) {
                     // save
-                    console.log('_id === -1 | save');
                     save(releaseData)
                         .then((result, err) => {
                             if (result) {
@@ -105,7 +98,6 @@ module.exports = {
                             }
                         });
                 } else {
-                    console.log('_id !== -1 | update');
                     // update
                     update(_id, releaseData)
                         .then((result, err) => {
