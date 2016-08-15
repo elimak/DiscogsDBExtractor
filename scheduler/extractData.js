@@ -47,7 +47,7 @@ function getContent(cleanedXML, tag) {
 }
 
 function getID(cleanedXML) {
-    return `${cleanedXML.split('id="')[1]}`.split('">')[0];
+    return `${cleanedXML.split('id="')[1]}`.split('"')[0];
 }
 
 function getLabelNames(cleanedXML) {

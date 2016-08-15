@@ -57,6 +57,8 @@ function save(data) {
 }
 
 function finalize(resolve, result) {
+    console.log('finalize', resolve.success, resolve.error);
+    console.log('finalize', result);
     if (result.success) {
         resolve({
             success: result.success.id,
