@@ -1,13 +1,5 @@
-'use strict';
-const ReleaseVO = require('./ReleaseVo.js');
-const error = require('./dbResponse.js').error;
-const success = require('./dbResponse.js').success;
-
-let ids = {};
-let failed = {};
-let completeCallBack;
-
-let logs = '';
+import ReleaseVO from './ReleaseVo.js';
+import { error, success } from './dbResponse';
 
 function all() {
     return new Promise((resolve) => {
@@ -15,15 +7,15 @@ function all() {
             if (err) {
                 resolve(error(err, data.id));
             } else {
-                resolve(success(data));
+                resolve(success(data, data.id));
             }
         });
     });
 }
 
 function get_id(data) {
-    return new Promise(function(resolve) {
-        ReleaseVO.findOne({ id: data.id }, function(err, newData) {
+    return new Promise((resolve) => {
+        ReleaseVO.findOne({ id: data.id }, (err, newData) => {
             if (newData && newData._id) {
                 resolve(newData._id);
             } else {
@@ -34,81 +26,89 @@ function get_id(data) {
 }
 
 function update(_id, data) {
-    return new Promise(function(resolve) {
-        ReleaseVO.findByIdAndUpdate(_id, data, function(err, newData) {
+    return new Promise((resolve) => {
+        ReleaseVO.findByIdAndUpdate(_id, data, (err, newData) => {
             if (err) {
-                console.log('--- update error ?', data.id, err);
-                logs += 'update error' + data.id + ': ' + err + '<br>';
                 resolve(error(err, data.id));
             } else {
-                resolve(success(newData));
+                resolve(success(newData, data.id));
             }
         });
     });
 }
 
 function save(data) {
-    return new Promise(function(resolve) {
+    return new Promise((resolve) => {
         const release = new ReleaseVO(data);
-        release.save(function(err, newData) {
+        release.save((err, newData) => {
             if (err) {
-                console.log('--- save error ?', data.id, err);
-                logs += 'save error' + data.id + ': ' + err + '<br>';
                 resolve(error(err, data.id));
             } else {
-                resolve(success(newData));
+                resolve(success(newData, data.id));
             }
         });
     });
 }
 
-function finalize(result) {
+function finalize(resolve, result) {
     if (result.success) {
-        console.log('saved', result.success.id);
-        logs += 'saved' + result.id + '<br>';
-        delete ids[result.success.id];
+        resolve({
+            success: result.success.id,
+            successMsg: result.success.msg
+        });
     }
 
     if (result.error) {
-        console.log('error saving', result.id);
-        logs += 'saved' + result.id + '<br>';
-        delete ids[result.id];
-        failed[result.id] = true;
-    }
-    if (!Object.keys(ids).length) {
-        console.log('Completed?');
-        completeCallBack();
-    } else if (Object.keys(ids).length === 1 ) {
-        console.log(JSON.stringify(Object.keys(ids)));
+        resolve({
+            error: result.error.id,
+            errorMsg: result.error.msg
+        });
     }
 }
 
 module.exports = {
     // type = 'release';
-    addReleaseToDB: function(releaseData, complete) {
-        completeCallBack = complete;
-        ids[releaseData.id] = true;
-        console.log('addReleaseToDB? ', releaseData.id);
-        get_id(releaseData).then(function(_id) {
-            if (_id === -1) {
-                // save
-                save(releaseData)
-                    .then(function(result) {
-                        finalize(result);
+    addReleaseToDB: (releaseData) => {
+        return new Promise((resolve, reject) => {
+            get_id(releaseData).then((_id, getIdErr) => {
+                if (getIdErr) {
+                    resolve({
+                        error: releaseData.id,
+                        errorMsg: getIdErr
                     });
-            } else {
-                // update
-                update(_id, releaseData)
-                    .then(function(result) {
-                        finalize(result);
-                    });
-            }
+                }
+                if (_id === -1) {
+                    // save
+                    save(releaseData)
+                        .then((result, err) => {
+                            if (result) {
+                                finalize(resolve, result);
+                            } else if (err) {
+                                resolve({
+                                    error: releaseData.id,
+                                    errorMsg: err
+                                });
+                            }
+                        });
+                } else {
+                    // update
+                    update(_id, releaseData)
+                        .then((result, err) => {
+                            if (result) {
+                                finalize(resolve, result);
+                            } else if (err) {
+                                resolve({
+                                    error: releaseData.id,
+                                    errorMsg: err
+                                });
+                            }
+                        });
+                }
+            });
         });
     },
 
     resetLogs: function() {
-        failed = {};
-        ids = {};
     },
 
     logAll: function() {

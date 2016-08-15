@@ -5,16 +5,18 @@ import saxpath from 'saxpath';
 import sax from 'sax';
 
 const dataFolder = './scheduler/data/';
-let schemas = [];
+let releaseCount;
 
-function processXml(fileName, type, savingFunction) {
+function processXml(fileName, type, savingFunction, dataToSave) {
     return new Promise((resolve, reject) => {
         console.log('create stream with ', `${dataFolder}${fileName}`);
         const fileStream = fs.createReadStream(`${dataFolder}${fileName}`);
         const saxParser = sax.createStream(true);
         const streamer = new saxpath.SaXPath(saxParser, `//${type}`);
 
-        streamer.on('match', savingFunction);
+        streamer.on('match', (xml) => {
+            savingFunction(xml, dataToSave);
+        });
         streamer.on('error', () => {
             reject('there was an error parsing the xml');
             console.log('there was an error parsing the xml');
@@ -23,7 +25,7 @@ function processXml(fileName, type, savingFunction) {
         fileStream.pipe(saxParser);
         fileStream.on('close', () => {
             console.log('----- XML parsed -----');
-            resolve(schemas);
+            resolve(true);
         });
     });
 }
@@ -120,7 +122,7 @@ function getFormats(cleanedXML) {
     return result;
 }
 
-function saveRelease(xml) {
+function saveRelease(xml, dataToSave) {
     const cleanedXML = cleanUpXML(xml);
 
     const schema = {
@@ -137,22 +139,26 @@ function saveRelease(xml) {
         label_names: getLabelNames(cleanedXML),
         label_cats: getLabelCats(cleanedXML)
     };
-    console.log(schemas.length);
-    schemas.push(schema);
+
+    releaseCount ++;
+    if (releaseCount % 1000 === 0) {
+        console.log('release count', releaseCount);
+    }
+    dataToSave.push(schema);
 }
 
 export default {
     // type = 'release';
-    releases: (fileName) => {
-        schemas = [];
+    releases: (fileName, dataToSave) => {
+        releaseCount = 0;
         return new Promise((resolve, reject) => {
             console.log('Now extracting xml from', fileName);
-            processXml(fileName, 'release', saveRelease)
+            processXml(fileName, 'release', saveRelease, dataToSave)
                 .then((resolved, rejected) => {
                     if (resolved) {
                         resolve({
                             fileName,
-                            schemas
+                            releaseCount
                         });
                     } else if (rejected) {
                         reject({
