@@ -16,8 +16,8 @@ function saveReleases() {
             .then((resolved, rejected) => {
                 if (resolved) {
                     savedCount ++;
-                    if (savedCount % 20 === 0) {
-                        console.log(`So far ${savedCount} records were saved`);
+                    if (savedCount % 100 === 0) {
+                        console.log(`So far ${savedCount} records were saved and ${dataToSave} left to process`);
                     }
                     saveReleases();
                 } else if (rejected) {
@@ -55,9 +55,14 @@ function loadResource(file) {
                     console.log(`starting to save the records with ${dataToSave.length} stored schema`);
                     saveReleases();
                 }, 5000);
+                setTimeout(() => { saveReleases(); }, 5100);
+                setTimeout(() => { saveReleases(); }, 5200);
+                setTimeout(() => { saveReleases(); }, 5300);
                 setTimeout(() => { saveReleases(); }, 5400);
+                setTimeout(() => { saveReleases(); }, 5500);
+                setTimeout(() => { saveReleases(); }, 5600);
+                setTimeout(() => { saveReleases(); }, 5700);
                 setTimeout(() => { saveReleases(); }, 5800);
-                setTimeout(() => { saveReleases(); }, 6200);
             } else if (rejected) {
                 emailer.error(rejected.rejectedMsg);
                 console.log(rejected.rejectedMsg);
@@ -85,7 +90,7 @@ function _process() {
 
 
 new CronJob({
-    cronTime: '18 * * * *', // 15 seconds after every minute
+    cronTime: '40 * * * *', // 15 seconds after every minute
     //cronTime: '1 */6 * * *', // 2 times a day
     //onTick: processRelease,
     //onTick: loadResource,
