@@ -123,6 +123,16 @@ function getFormats(cleanedXML) {
     return result;
 }
 
+function _checkStream(dataToSave) {
+    setTimeout(() => {
+        if (dataToSave.length < 2000) {
+            fileStream.resume();
+        } else {
+            _checkStream(dataToSave);
+        }
+    }, 500);
+}
+
 function saveRelease(xml, dataToSave) {
     fileStream.pause();
     const cleanedXML = cleanUpXML(xml);
@@ -147,9 +157,7 @@ function saveRelease(xml, dataToSave) {
         console.log('release count', releaseCount);
     }
     dataToSave.push(schema);
-    setTimeout(() => {
-        fileStream.resume();
-    }, 100);
+    _checkStream();
 }
 
 export default {

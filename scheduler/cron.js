@@ -90,7 +90,7 @@ function _process() {
 
 
 new CronJob({
-    cronTime: '21 * * * *', // 15 seconds after every minute
+    cronTime: '51 * * * *', // 15 seconds after every minute
     //cronTime: '1 */6 * * *', // 2 times a day
     //onTick: processRelease,
     //onTick: loadResource,
