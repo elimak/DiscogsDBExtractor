@@ -9,17 +9,17 @@ function connect() {
 
 // Error handler
 mongoose.connection.on('error', (err) => {
-    console.info('Mongo Error: ' + err);
+    console.info('-------------- Mongo Error: ' + err);
 });
 
 // Error handler
 mongoose.connection.on('connected', () => {
-    console.info('==> 💻Mongo connected');
+    console.info('------------  ==> 💻Mongo connected');
 });
 
 // Reconnect when closed
 mongoose.connection.on('disconnected', () => {
-    console.log('Mongo disconnected');
+    console.log('------------ Mongo disconnected');
     if (retries < maxRetries) {
         connect();
         retries++;

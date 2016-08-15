@@ -42,10 +42,13 @@ function update(_id, data) {
 function save(data) {
     return new Promise((resolve) => {
         const release = new ReleaseVO(data);
+        console.log('attempting to save', data.id);
         release.save((err, newData) => {
             if (err) {
+                console.log('saving failed?', data.id);
                 resolve(error(err, data.id));
             } else {
+                console.log('saving succeed?', data.id);
                 resolve(success(newData, data.id));
             }
         });
