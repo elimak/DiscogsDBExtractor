@@ -17,7 +17,7 @@ function saveReleases() {
                 if (resolved) {
                     savedCount ++;
                     if (savedCount % 100 === 0) {
-                        console.log(`So far ${savedCount} records were saved and ${dataToSave.length} left to process`);
+                        console.log(`So far ${savedCount} records were saved`);
                     }
                     saveReleases();
                 } else if (rejected) {
@@ -90,7 +90,7 @@ function _process() {
 
 
 new CronJob({
-    cronTime: '17 * * * *', // 15 seconds after every minute
+    cronTime: '25 14 * * *', // 15 seconds after every minute
     //cronTime: '1 */6 * * *', // 2 times a day
     //onTick: processRelease,
     //onTick: loadResource,
