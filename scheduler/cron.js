@@ -3,7 +3,7 @@ import loadResources from './loadResources';
 import discogsFileList from './discogsFileList';
 import emailer from './emailer';
 import extractData from './extractData';
-import releasesAPI from './releasesAPI';
+import releasesAPI from './db/releasesAPI';
 
 let dataToSave;
 let savedCount;
@@ -79,7 +79,7 @@ function _process() {
 
 
 new CronJob({
-    cronTime: '39 * * * *', // 15 seconds after every minute
+    cronTime: '41 * * * *', // 15 seconds after every minute
     //cronTime: '1 */6 * * *', // 2 times a day
     //onTick: processRelease,
     //onTick: loadResource,
