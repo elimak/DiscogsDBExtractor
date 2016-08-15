@@ -14,13 +14,14 @@ function all() {
 }
 
 function get_id(data) {
+    console.log('get_id', `${data.id}`);
     return new Promise((resolve) => {
         ReleaseVO.findOne({ id: data.id }, (err, newData) => {
             if (newData && newData._id) {
                 console.log('requested', data.id, 'and found ', newData._id);
                 resolve(newData._id);
             } else {
-                console.log(data.id, ' was not found, returning -1');
+                console.log(`${data.id}`, ' was not found, returning -1');
                 resolve(-1);
             }
         });
@@ -74,7 +75,7 @@ function finalize(resolve, result) {
 module.exports = {
     // type = 'release';
     addReleaseToDB: (releaseData) => {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             get_id(releaseData).then((_id, getIdErr) => {
                 console.log('_id === -1', `|${_id}|`, _id === -1);
                 console.log('_id !== -1', _id !== -1);
