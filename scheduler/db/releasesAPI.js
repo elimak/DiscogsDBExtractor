@@ -92,27 +92,31 @@ module.exports = {
                             }
                         });
                 } else {
-                    // update
-                    update(_id, releaseData)
-                        .then((result, err) => {
-                            if (result) {
-                                finalize(resolve, result);
-                            } else if (err) {
-                                resolve({
-                                    error: releaseData.id,
-                                    errorMsg: err
-                                });
-                            }
-                        });
+                    resolve({
+                        success: releaseData.id,
+                        successMsg: 'record already existing'
+                    });
+                    //// update
+                    //update(_id, releaseData)
+                    //    .then((result, err) => {
+                    //        if (result) {
+                    //            finalize(resolve, result);
+                    //        } else if (err) {
+                    //            resolve({
+                    //                error: releaseData.id,
+                    //                errorMsg: err
+                    //            });
+                    //        }
+                    //    });
                 }
             });
         });
     },
 
-    resetLogs: function() {
+    resetLogs: () => {
     },
 
-    logAll: function() {
+    logAll: () => {
         all().then(function(result) {
             console.log(JSON.stringify(result));
         });
