@@ -3,7 +3,7 @@ import loadResources from './loadResources';
 import discogsFileList from './discogsFileList';
 import emailer from './emailer';
 import extractData from './extractData';
-import releaseAPI from './releaseAPI';
+import releasesAPI from './releasesAPI';
 
 let dataToSave;
 let savedCount;
@@ -11,7 +11,7 @@ let savedCount;
 function saveReleases() {
     if (dataToSave.length) {
         const record = dataToSave.pop();
-        releaseAPI.addReleaseToDB(record)
+        releasesAPI.addReleaseToDB(record)
             .then((resolved, rejected) => {
                 if (resolved) {
                     savedCount ++;
@@ -78,7 +78,7 @@ function _process() {
 
 
 new CronJob({
-    cronTime: '33 * * * *', // 15 seconds after every minute
+    cronTime: '34 * * * *', // 15 seconds after every minute
     //cronTime: '1 */6 * * *', // 2 times a day
     //onTick: processRelease,
     //onTick: loadResource,
