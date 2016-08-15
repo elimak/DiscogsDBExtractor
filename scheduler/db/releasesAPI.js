@@ -71,16 +71,18 @@ module.exports = {
     addReleaseToDB: (releaseData) => {
         return new Promise((resolve, reject) => {
             get_id(releaseData).then((_id, getIdErr) => {
-                console.log('get_ID', _id, getIdErr);
+                console.log('get_ID', releaseData, _id, getIdErr);
                 if (getIdErr) {
+                    console.log('getIdErr');
                     resolve({
                         error: releaseData.id,
                         errorMsg: getIdErr
                     });
                 }
+
                 if (_id === -1) {
                     // save
-                    console.log('save');
+                    console.log('_id === -1 | save');
                     save(releaseData)
                         .then((result, err) => {
                             if (result) {
@@ -93,7 +95,7 @@ module.exports = {
                             }
                         });
                 } else {
-                    console.log('update');
+                    console.log('_id !== -1 | update');
                     // update
                     update(_id, releaseData)
                         .then((result, err) => {
