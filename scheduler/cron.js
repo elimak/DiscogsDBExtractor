@@ -10,7 +10,8 @@ function loadResource(file) {
         .then((resolved, rejected) => {
             if (resolved) {
                 emailer.success(resolved.resolvedMsg);
-                extractData.releases(file)
+                const fileXml = `${file.split('.gz').join('')}.xml`;
+                extractData.releases(fileXml)
                     .then((resolved2, rejected2) => {
                         if (resolved2) {
                             emailer.success(`Successfully extracted ${resolved2.schemas.length} releases from ${resolved2.fileName}`);
@@ -46,7 +47,7 @@ function _process() {
 
 
 new CronJob({
-    cronTime: '44 * * * *', // 15 seconds after every minute
+    cronTime: '13 * * * *', // 15 seconds after every minute
     //cronTime: '1 */6 * * *', // 2 times a day
     //onTick: processRelease,
     //onTick: loadResource,

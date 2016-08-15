@@ -9,6 +9,7 @@ let schemas = [];
 
 function processXml(fileName, type, savingFunction) {
     return new Promise((resolve, reject) => {
+        console.log('create stream with ', `${dataFolder}${fileName}`);
         const fileStream = fs.createReadStream(`${dataFolder}${fileName}`);
         const saxParser = sax.createStream(true);
         const streamer = new saxpath.SaXPath(saxParser, `//${type}`);
@@ -49,6 +50,7 @@ function getID(cleanedXML) {
 
 function getLabelNames(cleanedXML) {
     const labels = getContent(cleanedXML, 'labels');
+    if (!labels) return [];
     const nodes = labels.split('<label');
     const result = [];
     nodes.forEach((node) => {
@@ -60,6 +62,7 @@ function getLabelNames(cleanedXML) {
 
 function getLabelCats(cleanedXML) {
     const labels = getContent(cleanedXML, 'labels');
+    if (!labels) return [];
     const nodes = labels.split('<label');
     const result = [];
     nodes.forEach((node) => {
@@ -71,6 +74,7 @@ function getLabelCats(cleanedXML) {
 
 function getArtists(cleanedXML, tag) {
     const artists = getContent(cleanedXML, tag);
+    if (!artists) return [];
     const nodes = artists.split('</artist>');
     const result = [];
     nodes.forEach((node) => {
@@ -82,6 +86,7 @@ function getArtists(cleanedXML, tag) {
 
 function getStyles(cleanedXML) {
     const styles = getContent(cleanedXML, 'styles');
+    if (!styles) return [];
     const nodes = styles.split('</style>');
     const result = [];
     nodes.forEach((node) => {
@@ -93,6 +98,7 @@ function getStyles(cleanedXML) {
 
 function getGenres(cleanedXML) {
     const genres = getContent(cleanedXML, 'genres');
+    if (!genres) return [];
     const nodes = genres.split('</genre>');
     const result = [];
     nodes.forEach((node) => {
@@ -104,6 +110,7 @@ function getGenres(cleanedXML) {
 
 function getFormats(cleanedXML) {
     const formats = getContent(cleanedXML, 'formats');
+    if (!formats) return [];
     const nodes = formats.split('</format>');
     const result = [];
     nodes.forEach((node) => {
@@ -139,6 +146,7 @@ export default {
     releases: (fileName) => {
         schemas = [];
         return new Promise((resolve, reject) => {
+            console.log('Now extracting xml from', fileName);
             processXml(fileName, 'release', saveRelease)
                 .then((resolved, rejected) => {
                     if (resolved) {
