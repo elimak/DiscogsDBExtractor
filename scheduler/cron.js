@@ -89,14 +89,14 @@ function _process() {
 }
 
 
-new CronJob({
-    // UTC
-    // 2,6,10,14,18
-    cronTime: '59 14 * * *', // 15 seconds after every minute
-    //cronTime: '1 */6 * * *', // 2 times a day
-    //onTick: processRelease,
-    //onTick: loadResource,
-    onTick: _process,
-    start: true,
-    timeZone: 'America/Los_Angeles'
-});
+//new CronJob({
+//    // UTC
+//    // 14 for 2PM
+//    cronTime: '59 14 * * *', // 15 seconds after every minute
+//    //cronTime: '1 */6 * * *', // 2 times a day
+//    //onTick: processRelease,
+//    //onTick: loadResource,
+//    onTick: _process,
+//    start: true,
+//    timeZone: 'America/Los_Angeles'
+//});
