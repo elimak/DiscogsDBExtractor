@@ -1,0 +1,89 @@
+import https from 'https';
+import spotifyApi from '../utils/spotifyWrapper';
+
+const optionsDiscogs = {
+    host: 'api.discogs.com',
+    path: '/database/search?advanced=1&type=master&page=1&per_page=200',
+    // path: '/database/search?advanced=1&type=master&label=Tympanik+Audio&style=IDM+Dubstep+-Rock+-Trance+-Hardcore+-Drum+-pop&page=1&per_page=100',
+    // path: '/database/search?advanced=1&type=master&label=Tympanik+Audio&style=IDM+Dubstep+-Rock+-Trance+-Hardcore+-Drum+-pop&key=jNQgMlNcQeXMxBkszShj&secret=qpYmnUgQmfCRJFybPMYbPMXWItOcBuDb',
+    headers: {
+        'user-agent': 'node.js',
+        'Authorization': 'Discogs key=jNQgMlNcQeXMxBkszShj, secret=qpYmnUgQmfCRJFybPMYbPMXWItOcBuDb'
+    }
+};
+
+function doRequest(opt) {
+    return new Promise((resolve) => {
+        https.get(opt, (res) => {
+            let body = '';
+            res.on('data', (chunk) => {
+                body += chunk;
+            });
+            res.on('end', () => {
+                let json = {};
+                try {
+                    json = JSON.parse(body);
+                } catch (e) {
+                    json = { error: 'error parsing the json response' };
+                }
+                resolve({ response: json });
+            });
+        }).on('error', (err) => {
+            resolve({ error: err.message });
+        });
+    });
+}
+
+function processSpotifySearch(masters, index, values, resolve) {
+    const next = (values.length !== (masters.length - 1)) ?
+        () => {
+            processSpotifySearch(masters, (index + 1), values, resolve);
+        } :
+        () => {
+            resolve(values.filter(val => !!val ));
+        };
+
+    const master = masters[index];
+    spotifyApi.searchAlbums(master.title).then((result) => {
+        if (result.body.albums.items.length === 1) {
+            const album = result.body.albums.items[0];
+            values.push({
+                query: master.title,
+                styles: master.style,
+                labels: master.label,
+                image: album.images[1].url,
+                name: album.name,
+                id: album.id,
+                artist: album.artists.map(artist => {
+                    return {
+                        name: artist.name,
+                        id: artist.id
+                    };
+                })[0]
+            });
+        } else {
+            values.push(null);
+        }
+        next();
+    });
+}
+
+export default function getDiscogsResults(req) {
+    const query = req.body.query;
+    const opt = Object.assign({}, optionsDiscogs);
+    opt.path += query;
+
+    return new Promise((resolve) => {
+        doRequest(opt).then((res) => {
+            if (res.response) {
+                const values = [];
+                console.log('Discogs search result - ', res.response.results.length);
+                if (res.response.results.length > 0) {
+                    processSpotifySearch(res.response.results, 0, values, resolve);
+                } else {
+                    resolve([]);
+                }
+            }
+        });
+    });
+}

@@ -17,5 +17,13 @@
   }
 }
 .appContent {
-  margin: 50px 0; // for fixed navbar
+  margin: 30px; // for fixed navbar
+}
+
+li {
+    list-style: none;
+}
+
+ul {
+    padding-left: 0px;
 }
