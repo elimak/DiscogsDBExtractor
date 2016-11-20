@@ -15,7 +15,7 @@ function _getDate() {
 
 function _getChecksum(dateTag) {
     return new Promise((res) => {
-        console.log('loading', `http://${process.env.DISCOGS_DATA_HOST}/data/discogs_${dateTag}_CHECKSUM.txt`);
+        console.log('loadingDiscogs', `http://${process.env.DISCOGS_DATA_HOST}/data/discogs_${dateTag}_CHECKSUM.txt`);
         request({
             uri: `http://${process.env.DISCOGS_DATA_HOST}/data/discogs_${dateTag}_CHECKSUM.txt`
         }, (error, response, body) => {

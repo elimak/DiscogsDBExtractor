@@ -1,39 +1,37 @@
-const SEARCH = 'discogs/SEARCH';
-const SEARCH_SUCCESS = 'discogs/SEARCH_SUCCESS';
-const SEARCH_FAIL = 'discogs/SEARCH_FAIL';
+const USER_LOAD = 'userInfo/LOAD';
+const USER_LOAD_SUCCESS = 'userInfo/LOAD_SUCCESS';
+const USER_LOAD_FAIL = 'userInfo/LOAD_FAIL';
 
 const initialState = {
     loaded: false,
     loading: false,
-    discogsData: ''
+    userData: ''
 };
 
 export default function reducer(state = initialState, action = {}) {
     switch (action.type) {
-        case SEARCH:
-            console.log('calling search with?', action);
+        case USER_LOAD:
+            console.log('calling user load with?', action);
             return {
                 ...state,
                 loading: true,
-                loaded: false,
-                discogsData: null,
-                error: null
+                loaded: false
             };
-        case SEARCH_SUCCESS:
+        case USER_LOAD_SUCCESS:
             console.log('did we succeed?', action);
             return {
                 ...state,
                 loading: false,
                 loaded: true,
-                discogsData: action.result
+                userData: action.result
             };
-        case SEARCH_FAIL:
+        case USER_LOAD_FAIL:
             console.log('looks like we failed?', action);
             return {
                 ...state,
                 loading: false,
                 loaded: false,
-                discogsData: null,
+                userData: '',
                 error: action.error
             };
         default:
@@ -41,12 +39,12 @@ export default function reducer(state = initialState, action = {}) {
     }
 }
 
-export function search(query) {
+export function loadUserData(token) {
     return {
-        types: [SEARCH, SEARCH_SUCCESS, SEARCH_FAIL],
-        promise: (client) => client.post('/getDiscogsResults', {
+        types: [USER_LOAD, USER_LOAD_SUCCESS, USER_LOAD_FAIL],
+        promise: (client) => client.post('/getUserInfo', {
             data: {
-                query
+                token
             }
         })
     };

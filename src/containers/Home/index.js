@@ -1,30 +1,65 @@
 import React, { Component, PropTypes } from 'react';
 import {connect} from 'react-redux';
+import { bindActionCreators } from 'redux';
 import Helmet from 'react-helmet';
 import * as discogsActions from 'redux/modules/discogs';
+import * as userActions from 'redux/modules/userInfo';
+import * as spotifyActions from 'redux/modules/spotify';
 import { Button } from 'react-toolbox/lib/button';
 import { ProgressBar } from 'react-toolbox/lib/progress_bar';
 import Autocomplete from 'react-toolbox/lib/autocomplete';
+import AlbumsFound from './components/AlbumsFound';
+import PlaylistSummary from './components/PlaylistSummary';
 
 import styles from '../../data/styles';
-const stateKey = 'spotify_auth_state';
 
-@connect(state => ({discogsData: state.discogs.discogsData, loading: state.discogs.loading}), discogsActions)
+function mapStateToProps(state) {
+    return {
+        discogsData: state.discogs.discogsData,
+        loadingDiscogs: state.discogs.loading,
+        savingSpotify: state.spotify.saving,
+        playlistInfo: state.spotify.playlist,
+        playlistError: state.spotify.error,
+        userData: state.userInfo.userData
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        userActions: bindActionCreators(userActions, dispatch),
+        discogsActions: bindActionCreators(discogsActions, dispatch),
+        spotifyActions: bindActionCreators(spotifyActions, dispatch)
+    };
+}
+
+@connect(mapStateToProps, mapDispatchToProps)
 export default class Home extends Component {
     static propTypes = {
         discogsData: PropTypes.object,
-        search: PropTypes.func,
-        loading: Boolean
+        userData: PropTypes.object,
+        playlistInfo: PropTypes.object,
+        discogsActions: PropTypes.object,
+        spotifyActions: PropTypes.object,
+        userActions: PropTypes.object,
+        loadingDiscogs: Boolean,
+        savingSpotify: Boolean
     };
 
     state = {
         stylesAdded: [],
         stylesExcluded: [],
-        params: []
+        params: {}
     };
 
     componentWillMount() {
-        this.setState({ params: this.getHashParams() });
+        const params = this.getHashParams();
+
+        if (!!params.access_token) {
+            this.setState({ params });
+            this.props.userActions.loadUserData(params.access_token);
+        } else {
+            this.props.spotifyActions.connectSpotify();
+        }
     }
 
     getHashParams() {
@@ -36,30 +71,6 @@ export default class Home extends Component {
             hashParams[e[1]] = decodeURIComponent(e[2]);
         }
         return hashParams;
-    }
-
-    generateRandomString(length) {
-        let text = '';
-        const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        for (const i = 0; i < length; i++) {
-            text += possible.charAt(Math.floor(Math.random() * possible.length));
-        }
-        return text;
-    };
-
-    onLoginWithSpotify() {
-        const client_id = '8a137d38ba9d46b9a2ca8528eca44bed'; // Your client id
-        const redirect_uri = 'http://localhost:3000/home'; // Your redirect uri
-        const state = this.generateRandomString(16);
-        localStorage.setItem(stateKey, state);
-        const scope = 'user-read-private user-read-email';
-        const url = 'https://accounts.spotify.com/authorize';
-        url += '?response_type=token';
-        url += '&client_id=' + encodeURIComponent(client_id);
-        url += '&scope=' + encodeURIComponent(scope);
-        url += '&redirect_uri=' + encodeURIComponent(redirect_uri);
-        url += '&state=' + encodeURIComponent(state);
-        window.location = url;
     }
 
     onSubmitQuery() {
@@ -74,7 +85,7 @@ export default class Home extends Component {
             return escape(noSpace);
         }).join('+-');
         const queryStyle = `&style=${queryAdded}+-${queryExcluded}`;
-        this.props.search(queryStyle);
+        this.props.discogsActions.search(queryStyle);
     }
 
     handleStyleSelection(val, event) {
@@ -97,12 +108,24 @@ export default class Home extends Component {
         }
     }
 
+    onLogout() {
+        this.props.spotifyActions.connectSpotify(true);
+    }
+
     render() {
         const cssStyles = require('./Home.scss');
         const styleSources = styles.map((val) => val.style);
 
+        console.log(this.state);
+        console.log('userData ', this.props.userData);
+        console.log('playlistInfo ', this.props.playlistInfo);
+
         return (<div className={cssStyles.home}>
                <Helmet title="Home"/>
+                <div>
+                    <p>Logged as {this.props.userData.id}</p>
+                    <Button label="Not you?" onClick={this.onLogout.bind(this)}/>
+                </div>
                <h1>Home</h1>
                 <div className={cssStyles.mainForm}>
                     <Autocomplete
@@ -123,27 +146,11 @@ export default class Home extends Component {
                     />
                     <Button raised primary label="Query Discogs" onClick={this.onSubmitQuery.bind(this)}/>
                 </div>
-                { this.props.loading && (
+                { this.props.loadingDiscogs && (
                     <ProgressBar mode="indeterminate"/>
                 )}
-                { this.props.discogsData && this.props.discogsData.length && (
-                    <div><h3>This search found: { this.props.discogsData.length } records</h3></div>
-                )}
-                { this.props.discogsData && this.props.discogsData.length && ( this.props.discogsData.map((album) => {
-                    return (<div>
-                        <iframe src={`https://embed.spotify.com/?uri=spotify:album:${album.id}`} width="250" height="80" frameBorder="0" allowTransparency="true"></iframe>
-                        <div className={cssStyles['card-body']}>
-                            <h4>{album.artist.name} - {album.name}</h4>
-                            <p className={cssStyles.pink}>{album.styles.join(', ')}</p>
-                            <p className={cssStyles.blue}>{album.labels.join(', ')}</p>
-                        </div>
-                        <hr/>
-                        </div>);
-                }))}
-
-                { this.props.discogsData && !this.props.discogsData.length && (
-                    <p>There was no record found</p>
-                )}
+                <AlbumsFound />
+                <PlaylistSummary />
             </div>);
     }
 }

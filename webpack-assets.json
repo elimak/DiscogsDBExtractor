@@ -1,6 +1,6 @@
 {
   "javascript": {
-    "main": "http://localhost:3001/dist/main-3035bfba4241ff180e11.js"
+    "main": "http://localhost:3001/dist/main-dcb1ee005c0847390ae0.js"
   },
   "styles": {},
   "assets": {
@@ -101,7 +101,8 @@
       "pink": "pink___dUgpo",
       "card-img": "card-img___2BgOO",
       "card-body": "card-body___vWmax",
-      "_style": "/**\n *  Define scss variables here.\n *\n *  Available options for Bootstrap:\n *  http://getbootstrap.com/customize/\n *\n */\n.home___1bkob dd {\n  margin-bottom: 15px;\n}\n\n.mainForm___3jZoU {\n  max-width: 350px;\n}\n\n.blue___188ld {\n  color: blue;\n}\n\n.pink___dUgpo {\n  color: deeppink;\n}\n\n.card-img___2BgOO {\n  display: inline-block;\n  float: left;\n}\n\n.card-img___2BgOO img {\n  width: 120px;\n  height: 120px;\n}\n\n.card-body___vWmax {\n  display: inline-block;\n  max-width: 450px;\n  margin-left: 15px;\n  margin-right: 10px;\n}\n"
+      "results": "results___3I7kC",
+      "_style": "/**\n *  Define scss variables here.\n *\n *  Available options for Bootstrap:\n *  http://getbootstrap.com/customize/\n *\n */\n.home___1bkob dd {\n  margin-bottom: 15px;\n}\n\n.mainForm___3jZoU {\n  max-width: 350px;\n}\n\n.blue___188ld {\n  color: blue;\n}\n\n.pink___dUgpo {\n  color: deeppink;\n}\n\n.card-img___2BgOO {\n  display: inline-block;\n  float: left;\n}\n\n.card-img___2BgOO img {\n  width: 120px;\n  height: 120px;\n}\n\n.card-body___vWmax {\n  display: inline-block;\n  max-width: 450px;\n  margin-left: 15px;\n  margin-right: 10px;\n}\n\n.results___3I7kC ul li {\n  margin-left: 20px;\n}\n"
     },
     "./src/containers/App/App.scss": {
       "app": "app___3sz-J",

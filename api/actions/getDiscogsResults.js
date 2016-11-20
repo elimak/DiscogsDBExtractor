@@ -40,14 +40,30 @@ function processSpotifySearch(masters, index, values, resolve) {
             processSpotifySearch(masters, (index + 1), values, resolve);
         } :
         () => {
-            resolve(values.filter(val => !!val ));
+            resolve(values.filter(val => val !== 'empty' ));
         };
+
+    function checkTimeout(currentIndex) {
+        if (currentIndex === index) {
+            // timmed out - restart call
+            processSpotifySearch(masters, index, values, resolve);
+        }
+    }
+
+    let timeout;
+    if (!values[index]) {
+        timeout = setTimeout(() => {
+            checkTimeout(index);
+        }, 5000);
+    }
+
 
     const master = masters[index];
     spotifyApi.searchAlbums(master.title).then((result) => {
+        clearTimeout(timeout);
         if (result.body.albums.items.length === 1) {
             const album = result.body.albums.items[0];
-            values.push({
+            values[index] = {
                 query: master.title,
                 styles: master.style,
                 labels: master.label,
@@ -60,9 +76,9 @@ function processSpotifySearch(masters, index, values, resolve) {
                         id: artist.id
                     };
                 })[0]
-            });
+            };
         } else {
-            values.push(null);
+            values[index] = 'empty';
         }
         next();
     });
