@@ -13,7 +13,6 @@ function mapStateToProps(state) {
         savingSpotify: state.spotify.saving,
         savedSpotify: state.spotify.saved,
         playlist: state.spotify.playlist,
-        loadedUser: state.userInfo.loaded,
         userData: state.userInfo.userData
     };
 }
@@ -33,8 +32,7 @@ export default class AlbumsFound extends Component {
         userData: PropTypes.object,
         loadingDiscogs: Boolean,
         savingSpotify: Boolean,
-        savedSpotify: Boolean,
-        loadedUser: Boolean
+        savedSpotify: Boolean
     };
 
     state = {
@@ -53,8 +51,6 @@ export default class AlbumsFound extends Component {
 
     render() {
         const cssStyles = require('../Home.scss');
-
-        const isLogged = this.props.userData.id && this.props.loadedUser;
 
         const isLoading = this.props.loadingDiscogs;
         const isSaving = this.props.savingSpotify;
@@ -75,7 +71,7 @@ export default class AlbumsFound extends Component {
         // console.log('render this: ', (isLogged && hasResult && !isLoading));
         // console.log('render this: ', isLogged, ' && ', hasResult, ' && ', !isLoading);
 
-        if (!isLogged || !this.props.discogsData || !!this.props.playlist) {
+        if (!this.props.discogsData || !!this.props.playlist) {
             return (<div/>);
         }
 

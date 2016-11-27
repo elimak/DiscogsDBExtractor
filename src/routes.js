@@ -4,7 +4,7 @@ import Home from 'containers/Home';
 import NotFound from 'containers/NotFound';
 import App from 'containers/App';
 
-export default (store) => {
+export default () => {
     /**
     * Please keep routes in alphabetical order
     */

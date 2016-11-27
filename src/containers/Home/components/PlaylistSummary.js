@@ -24,9 +24,9 @@ export default class PlaylistSummary extends Component {
     render() {
         const cssStyles = require('../Home.scss');
 
-        const isLogged = this.props.playlist;
+        const hasPlaylist = !!this.props.playlist;
 
-        if (!isLogged) {
+        if (!hasPlaylist) {
             return (<div/>);
         }
 
@@ -34,7 +34,7 @@ export default class PlaylistSummary extends Component {
             <div className={cssStyles.results}>
                 <p>Show playlist summary:</p>
                 <iframe src={`https://embed.spotify.com/?uri=${this.props.playlist.uri}`}
-                 width="640" height="720" frameborder="0" allowtransparency="true"></iframe>
+                 width="640" height="720" frameBorder="0" allowTransparency="true"></iframe>
             </div>
         );
     }

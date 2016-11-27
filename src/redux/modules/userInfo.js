@@ -5,7 +5,8 @@ const USER_LOAD_FAIL = 'userInfo/LOAD_FAIL';
 const initialState = {
     loaded: false,
     loading: false,
-    userData: ''
+    userData: null,
+    error: null
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -15,7 +16,9 @@ export default function reducer(state = initialState, action = {}) {
             return {
                 ...state,
                 loading: true,
-                loaded: false
+                loaded: false,
+                userData: null,
+                error: null
             };
         case USER_LOAD_SUCCESS:
             console.log('did we succeed?', action);
@@ -23,7 +26,8 @@ export default function reducer(state = initialState, action = {}) {
                 ...state,
                 loading: false,
                 loaded: true,
-                userData: action.result
+                userData: action.result,
+                error: null
             };
         case USER_LOAD_FAIL:
             console.log('looks like we failed?', action);
@@ -31,7 +35,7 @@ export default function reducer(state = initialState, action = {}) {
                 ...state,
                 loading: false,
                 loaded: false,
-                userData: '',
+                userData: null,
                 error: action.error
             };
         default:

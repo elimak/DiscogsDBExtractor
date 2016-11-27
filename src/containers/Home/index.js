@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import autobind from 'autobind-decorator';
 import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Helmet from 'react-helmet';
@@ -7,11 +8,11 @@ import * as userActions from 'redux/modules/userInfo';
 import * as spotifyActions from 'redux/modules/spotify';
 import { Button } from 'react-toolbox/lib/button';
 import { ProgressBar } from 'react-toolbox/lib/progress_bar';
-import Autocomplete from 'react-toolbox/lib/autocomplete';
 import AlbumsFound from './components/AlbumsFound';
 import PlaylistSummary from './components/PlaylistSummary';
-
-import styles from '../../data/styles';
+import StylesForm from './components/StylesForm';
+import GenresForm from './components/GenresForm';
+import TitleArtistLabelForm from './components/TitleArtistLabelForm';
 
 function mapStateToProps(state) {
     return {
@@ -20,7 +21,9 @@ function mapStateToProps(state) {
         savingSpotify: state.spotify.saving,
         playlistInfo: state.spotify.playlist,
         playlistError: state.spotify.error,
-        userData: state.userInfo.userData
+        userData: state.userInfo.userData,
+        loginError: state.userInfo.error,
+        loadedUser: state.userInfo.loaded
     };
 }
 
@@ -37,6 +40,8 @@ export default class Home extends Component {
     static propTypes = {
         discogsData: PropTypes.object,
         userData: PropTypes.object,
+        loginError: PropTypes.object,
+        loadedUser: PropTypes.object,
         playlistInfo: PropTypes.object,
         discogsActions: PropTypes.object,
         spotifyActions: PropTypes.object,
@@ -46,111 +51,75 @@ export default class Home extends Component {
     };
 
     state = {
-        stylesAdded: [],
-        stylesExcluded: [],
+        // stylesAdded: [],
+        // stylesExcluded: [],
+        styles: '',
+        genres: '',
+        date: '',
+        titleArtistlabel: '',
         params: {}
     };
 
-    componentWillMount() {
-        const params = this.getHashParams();
-
-        if (!!params.access_token) {
-            this.setState({ params });
-            this.props.userActions.loadUserData(params.access_token);
-        } else {
-            this.props.spotifyActions.connectSpotify();
-        }
-    }
-
-    getHashParams() {
-        const hashParams = {};
-        let e;
-        const r = /([^&;=]+)=?([^&;]*)/g;
-        const q = window.location.hash.substring(1);
-        while (e = r.exec(q)) {
-            hashParams[e[1]] = decodeURIComponent(e[2]);
-        }
-        return hashParams;
-    }
-
+    @autobind
     onSubmitQuery() {
-        event.preventDefault();
-        console.log(this.state);
-        const queryAdded = this.state.stylesAdded.map((val) => {
-            const noSpace = val.split(' ').join('+');
-            return escape(noSpace);
-        }).join('+');
-        const queryExcluded = this.state.stylesExcluded.map((val) => {
-            const noSpace = val.split(' ').join('+-');
-            return escape(noSpace);
-        }).join('+-');
-        const queryStyle = `&style=${queryAdded}+-${queryExcluded}`;
-        this.props.discogsActions.search(queryStyle);
-    }
-
-    handleStyleSelection(val, event) {
-        if (event.currentTarget.id) {
-            const stylesAdded = this.state.stylesAdded;
-            stylesAdded.push(event.currentTarget.id);
-            this.setState({stylesAdded});
-        } else {
-            this.setState({stylesAdded: val});
+        const query = `${this.state.genres}${this.state.styles}${this.state.titleArtistlabel}${this.state.date}`;
+        console.log(query);
+        if (query) {
+            this.props.discogsActions.search(query);
         }
     }
 
-    handleStyleExclusionSelection(val, event) {
-        if (event.currentTarget.id) {
-            const stylesExcluded = this.state.stylesExcluded;
-            stylesExcluded.push(event.currentTarget.id);
-            this.setState({stylesExcluded});
-        } else {
-            this.setState({stylesExcluded: val});
-        }
+    @autobind
+    onUpdateStyleQuery(newQuery) {
+        this.setState({ styles: newQuery });
+        console.log('onUpdateStyleQuery ', this.state);
     }
 
-    onLogout() {
-        this.props.spotifyActions.connectSpotify(true);
+    @autobind
+    onUpdateGenreQuery(newQuery) {
+        this.setState({ genres: newQuery });
+        console.log('onUpdateGenreQuery ', this.state);
+    }
+
+    @autobind
+    onUpdateDateQuery(newQuery) {
+        this.setState({ date: newQuery });
+        console.log('onUpdateDateQuery ', this.state);
+    }
+
+    @autobind
+    onUpdateTitleArtistLabelQuery(newQuery) {
+        this.setState({ titleArtistlabel: newQuery });
+        console.log('onUpdateTitleArtistLabelQuery ', this.state);
     }
 
     render() {
         const cssStyles = require('./Home.scss');
-        const styleSources = styles.map((val) => val.style);
 
-        console.log(this.state);
-        console.log('userData ', this.props.userData);
-        console.log('playlistInfo ', this.props.playlistInfo);
-
-        return (<div className={cssStyles.home}>
-               <Helmet title="Home"/>
+        return (
+            <div>
+                <Helmet title="Home"/>
                 <div>
-                    <p>Logged as {this.props.userData.id}</p>
-                    <Button label="Not you?" onClick={this.onLogout.bind(this)}/>
+                    <div className={cssStyles.discogsForm}>
+                        <TitleArtistLabelForm
+                            updateTitleArtistLabelQuery={ this.onUpdateTitleArtistLabelQuery }
+                        />
+                        <StylesForm
+                            updateStyleQuery={ this.onUpdateStyleQuery }
+                        />
+                        <GenresForm
+                            updateDateQuery={ this.onUpdateDateQuery}
+                            updateGenreQuery={ this.onUpdateGenreQuery}
+                        />
+                    </div>
+
+                    <Button raised primary label="Query Discogs" onClick={this.onSubmitQuery}/>
+                    { this.props.loadingDiscogs && (
+                        <ProgressBar mode="indeterminate"/>
+                    )}
+                    <AlbumsFound />
+                    <PlaylistSummary />
                 </div>
-               <h1>Home</h1>
-                <div className={cssStyles.mainForm}>
-                    <Autocomplete
-                        direction="down"
-                        selectedPosition="above"
-                        label="Add style"
-                        onChange={this.handleStyleSelection.bind(this)}
-                        source={styleSources}
-                        value={this.state.stylesAdded}
-                    />
-                    <Autocomplete
-                        direction="down"
-                        selectedPosition="above"
-                        label="Exclude style"
-                        onChange={this.handleStyleExclusionSelection.bind(this)}
-                        source={styleSources}
-                        value={this.state.stylesExcluded}
-                    />
-                    <Button raised primary label="Query Discogs" onClick={this.onSubmitQuery.bind(this)}/>
-                </div>
-                { this.props.loadingDiscogs && (
-                    <ProgressBar mode="indeterminate"/>
-                )}
-                <AlbumsFound />
-                <PlaylistSummary />
             </div>);
     }
 }

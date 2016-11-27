@@ -1,0 +1,49 @@
+$button-disabled-text-color: #ffffff;
+$button-disabled-background-color: #1DB954;
+$button-neutral-color-contrast: #FFFFFF;
+$button-neutral-color: #1DB954;
+$button-neutral-color-hover: #1DB954;
+
+%button {
+    &[disabled] {
+        color: $button-disabled-text-color;
+    }
+}
+
+%solid {
+    &[disabled] {
+        background-color: $button-disabled-background-color;
+    }
+}
+
+.neutral:not([disabled]) {
+    &.raised, &.floating {
+        color: $button-neutral-color-contrast;
+        background-color: $button-neutral-color;
+    }
+    &.flat, &.toggle {
+        color: $button-neutral-color-contrast;
+        &:focus:not(:active) {
+            background: $button-neutral-color-hover;
+        }
+    }
+    &.flat:hover {
+        background: $button-neutral-color-hover;
+    }
+
+    &.inverse {
+        &.raised, &.floating {
+            color: $button-neutral-color;
+            background-color: $button-neutral-color-contrast;
+        }
+        &.flat, &.toggle {
+            color: $button-neutral-color;
+            &:focus:not(:active) {
+                background: $button-neutral-color-hover;
+            }
+        }
+        &.flat:hover {
+            background: $button-neutral-color-hover;
+        }
+    }
+}
