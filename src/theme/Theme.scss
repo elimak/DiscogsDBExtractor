@@ -4,6 +4,13 @@ $button-neutral-color-contrast: #FFFFFF;
 $button-neutral-color: #1DB954;
 $button-neutral-color-hover: #1DB954;
 
+$color-divider: #1DB954;
+$progress-main-color: #1DB954;
+$progress-disabled-color: #1DB954;
+$progress-secondary-color: #1DB954;
+
+///BUTTON
+
 %button {
     &[disabled] {
         color: $button-disabled-text-color;
@@ -47,3 +54,32 @@ $button-neutral-color-hover: #1DB954;
         }
     }
 }
+
+/// PROGRESS BAR
+
+.linear {
+    background: $color-divider;
+}
+
+.value {
+    background-color: $progress-main-color;
+}
+
+[disabled] .value {
+    background-color: $progress-disabled-color;
+}
+
+.buffer {
+    background-image: linear-gradient(to right, $progress-secondary-color, $progress-secondary-color),
+    linear-gradient(to right, $progress-main-color, $progress-main-color);
+}
+
+[disabled] .buffer {
+    background-image: linear-gradient(to right, $progress-secondary-color, $progress-secondary-color),
+    linear-gradient(to right, $progress-disabled-color, $progress-disabled-color);
+}
+
+.path {
+    stroke: $progress-main-color;
+}
+

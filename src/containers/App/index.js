@@ -95,7 +95,7 @@ export default class App extends Component {
 
     render() {
         const styles = require('./App.scss');
-        const buttonTheme = require('./Theme.scss');
+        const theme = require('../../theme/Theme.scss');
 
         const isLogged = this.props.userData && this.props.userData.id && this.props.loadedUser;
 
@@ -111,7 +111,7 @@ export default class App extends Component {
                     <div className={styles.header}>
                     </div>
 
-                    <ProgressBar mode="indeterminate" multicolor />
+                    <ProgressBar mode="indeterminate" theme={theme}/>
                 </div>
             );
         }
@@ -128,7 +128,7 @@ export default class App extends Component {
                             <div><img src="Spotify_Logo_Black.png" width="120px"/></div>
                         </div>
                         <p>You need to be logged with a Spotify Premium account to access this tool</p>
-                        <Button raised onClick={this.onLogout} theme={buttonTheme}>
+                        <Button raised onClick={this.onLogout} theme={theme}>
                             <SpotifyIcon /> Log in with Spotify
                         </Button>
                     </div>

@@ -24,6 +24,14 @@ body {
     label {
         font-weight: 400;
     }
+
+    ul {
+        padding-left: 0px;
+    }
+
+    li {
+        list-style: none;
+    }
 }
 
 .appIntro {
@@ -39,6 +47,7 @@ body {
     display: flex;
     width: 65%;
     height: 80px;
+    margin: auto;
 
     > div {
         display: inline-flex;

@@ -95,12 +95,14 @@ export default class Home extends Component {
 
     render() {
         const cssStyles = require('./Home.scss');
+        const theme = require('../../theme/Theme.scss');
 
         return (
             <div>
                 <Helmet title="Home"/>
                 <div>
                     <div className={cssStyles.discogsForm}>
+                        <h3>Step 1: Query Albums from Discogs database (up to 100 results)</h3>
                         <TitleArtistLabelForm
                             updateTitleArtistLabelQuery={ this.onUpdateTitleArtistLabelQuery }
                         />
@@ -111,12 +113,15 @@ export default class Home extends Component {
                             updateDateQuery={ this.onUpdateDateQuery}
                             updateGenreQuery={ this.onUpdateGenreQuery}
                         />
+                        <div className={cssStyles.legend}>* This search will only return the albums are found in Spotify as well</div>
                     </div>
 
-                    <Button raised primary label="Query Discogs" onClick={this.onSubmitQuery}/>
+                    <Button className={cssStyles.test} raised label="Query Discogs" onClick={this.onSubmitQuery} theme={theme}/>
                     { this.props.loadingDiscogs && (
                         <ProgressBar mode="indeterminate"/>
                     )}
+
+
                     <AlbumsFound />
                     <PlaylistSummary />
                 </div>

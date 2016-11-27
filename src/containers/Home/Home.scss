@@ -1,46 +1,50 @@
-@import "../../theme/variables.scss";
+//@import "../../theme/variables.scss";
 
-body {
-    background-color: #f5f5f5;
-    font-family: Roboto, Helvetica, Arial, sans-serif;
-}
+//body {
+//    background-color: #f5f5f5;
+//    font-family: Roboto, Helvetica, Arial, sans-serif;
+//}
+//
+//.app {
+//    font-family: Roboto, Helvetica, Arial, sans-serif;
+//    line-height: 0;
+//    margin: 0 auto;
+//    max-width: 950px;
+//
+//    dd {
+//        margin-bottom: 15px;
+//    }
+//
+//    h3 {
+//        font-size: 1.5rem;
+//        font-weight: 500;
+//        line-height: 1;
+//        color: rgba(0,0,0,.7);
+//        text-transform: uppercase;
+//    }
+//
+//    label {
+//        font-weight: 400;
+//    }
+//}
 
-.app {
-    font-family: Roboto, Helvetica, Arial, sans-serif;
-    line-height: 0;
-    margin: 0 auto;
-    max-width: 950px;
 
-    dd {
-        margin-bottom: 15px;
-    }
-
-    h3 {
-        font-size: 1.5rem;
-        font-weight: 500;
-        line-height: 1;
-        color: rgba(0,0,0,.7);
-        text-transform: uppercase;
-    }
-
-    label {
-        font-weight: 400;
-    }
-}
-
-.header{
-
+.test {
+    width:100%;
+    margin-top: -5px;
 }
 
 .home {
 }
 
 .discogsForm {
-    font-size: 10px;
     padding: 20px;
     background-color: white;
     border: 2px solid #eaeaea;
     border-radius: 6px;
+}
+.legend {
+    margin: 20px 0px;
 }
 
 .flexBox_3 {
