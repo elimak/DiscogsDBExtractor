@@ -34,6 +34,12 @@ function doRequest(opt) {
     });
 }
 
+function cleanUpMasterTitle(title) {
+    const parts = title.split('-');
+    parts[0] = parts[0].replace(/\s*\(.*?\)\s*/g, '');
+    return parts.join('-');
+}
+
 function processSpotifySearch(masters, index, values, resolve) {
     const next = (values.length !== (masters.length - 1)) ?
         () => {
@@ -59,6 +65,8 @@ function processSpotifySearch(masters, index, values, resolve) {
 
 
     const master = masters[index];
+    master.title = cleanUpMasterTitle(master.title);
+    console.log(master.title);
     spotifyApi.searchAlbums(master.title).then((result) => {
         clearTimeout(timeout);
         if (result.body.albums.items.length === 1) {

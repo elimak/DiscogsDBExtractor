@@ -55,6 +55,7 @@ export default class Home extends Component {
         // stylesExcluded: [],
         styles: '',
         genres: '',
+        country: '',
         date: '',
         titleArtistlabel: '',
         params: {}
@@ -62,7 +63,7 @@ export default class Home extends Component {
 
     @autobind
     onSubmitQuery() {
-        const query = `${this.state.genres}${this.state.styles}${this.state.titleArtistlabel}${this.state.date}`;
+        const query = `${this.state.genres}${this.state.styles}${this.state.titleArtistlabel}${this.state.date}${this.state.country}`;
         console.log(query);
         if (query) {
             this.props.discogsActions.search(query);
@@ -73,6 +74,12 @@ export default class Home extends Component {
     onUpdateStyleQuery(newQuery) {
         this.setState({ styles: newQuery });
         console.log('onUpdateStyleQuery ', this.state);
+    }
+
+    @autobind
+    onUpdateCountryQuery(newQuery) {
+        this.setState({ country: newQuery });
+        console.log('onUpdateCountryQuery ', this.state);
     }
 
     @autobind
@@ -111,16 +118,20 @@ export default class Home extends Component {
                         />
                         <GenresForm
                             updateDateQuery={ this.onUpdateDateQuery}
+                            updateCountryQuery={ this.onUpdateCountryQuery}
                             updateGenreQuery={ this.onUpdateGenreQuery}
                         />
-                        <div className={cssStyles.legend}>* This search will only return the albums are found in Spotify as well</div>
+                        <div className={cssStyles.legend}>* This search will only return the albums that are found in Spotify as well</div>
+
+                        <div>
+                            <Button className={cssStyles.buttonQuery} raised label="Clear Filters" onClick={this.onSubmitQuery} theme={theme}/>
+                            <Button className={cssStyles.buttonQuery} raised label="Query Discogs" onClick={this.onSubmitQuery} theme={theme}/>
+                        </div>
                     </div>
 
-                    <Button className={cssStyles.test} raised label="Query Discogs" onClick={this.onSubmitQuery} theme={theme}/>
                     { this.props.loadingDiscogs && (
-                        <ProgressBar mode="indeterminate"/>
+                        <ProgressBar mode="indeterminate" theme={theme}/>
                     )}
-
 
                     <AlbumsFound />
                     <PlaylistSummary />
