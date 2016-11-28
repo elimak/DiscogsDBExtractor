@@ -32,6 +32,15 @@ export default class GenresForm extends Component {
         this.props.updateTitleArtistLabelQuery(query);
     };
 
+    clearFilters() {
+        this.setState({
+            label: '',
+            artist: '',
+            title: ''
+        });
+        this.props.updateTitleArtistLabelQuery('');
+    }
+
     render() {
         const cssStyles = require('../Home.scss');
 

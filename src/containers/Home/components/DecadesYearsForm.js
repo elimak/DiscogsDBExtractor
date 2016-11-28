@@ -41,6 +41,14 @@ export default class DecadesYears extends Component {
         return res;
     }
 
+    clearFilters() {
+        this.setState({
+            decade: '',
+            year: ''
+        });
+        this.props.updateDateQuery('');
+    }
+
     render() {
         const cssStyles = require('../Home.scss');
         let yearsSources = years.getYears().map((val) => val.year);

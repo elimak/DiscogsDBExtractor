@@ -14,6 +14,10 @@ export default class StylesForm extends Component {
     };
 
     getQuery(added, excluded) {
+        if ((added || this.state.stylesAdded).length === 0 &&
+            (excluded || this.state.stylesExcluded).length === 0) {
+            return '';
+        }
         const queryAdded = (added || this.state.stylesAdded).map((val) => {
             const noSpace = val.split(' ').join('+');
             return escape(noSpace);
@@ -38,11 +42,17 @@ export default class StylesForm extends Component {
         this.props.updateStyleQuery(this.getQuery(null, stylesExcluded));
     }
 
+    clearFilters() {
+        this.setState({
+            stylesAdded: [],
+            stylesExcluded: []
+        });
+        this.props.updateStyleQuery('');
+    }
+
     render() {
         const cssStyles = require('../Home.scss');
         const styleSources = styles.map((val) => val.style);
-
-        // <h3>By styles:</h3>
 
         return (
             <div className={cssStyles.flexBox_2}>

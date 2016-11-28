@@ -8,19 +8,15 @@ import * as userActions from 'redux/modules/userInfo';
 import * as spotifyActions from 'redux/modules/spotify';
 import { Button } from 'react-toolbox/lib/button';
 import { ProgressBar } from 'react-toolbox/lib/progress_bar';
-import AlbumsFound from './components/AlbumsFound';
-import PlaylistSummary from './components/PlaylistSummary';
 import StylesForm from './components/StylesForm';
 import GenresForm from './components/GenresForm';
 import TitleArtistLabelForm from './components/TitleArtistLabelForm';
+import SearchSummary from './components/SearchSummary';
 
 function mapStateToProps(state) {
     return {
         discogsData: state.discogs.discogsData,
         loadingDiscogs: state.discogs.loading,
-        savingSpotify: state.spotify.saving,
-        playlistInfo: state.spotify.playlist,
-        playlistError: state.spotify.error,
         userData: state.userInfo.userData,
         loginError: state.userInfo.error,
         loadedUser: state.userInfo.loaded
@@ -38,21 +34,17 @@ function mapDispatchToProps(dispatch) {
 @connect(mapStateToProps, mapDispatchToProps)
 export default class Home extends Component {
     static propTypes = {
-        discogsData: PropTypes.object,
+        discogsData: PropTypes.array,
         userData: PropTypes.object,
         loginError: PropTypes.object,
         loadedUser: PropTypes.object,
-        playlistInfo: PropTypes.object,
         discogsActions: PropTypes.object,
         spotifyActions: PropTypes.object,
         userActions: PropTypes.object,
         loadingDiscogs: Boolean,
-        savingSpotify: Boolean
     };
 
     state = {
-        // stylesAdded: [],
-        // stylesExcluded: [],
         styles: '',
         genres: '',
         country: '',
@@ -73,7 +65,6 @@ export default class Home extends Component {
     @autobind
     onUpdateStyleQuery(newQuery) {
         this.setState({ styles: newQuery });
-        console.log('onUpdateStyleQuery ', this.state);
     }
 
     @autobind
@@ -85,24 +76,36 @@ export default class Home extends Component {
     @autobind
     onUpdateGenreQuery(newQuery) {
         this.setState({ genres: newQuery });
-        console.log('onUpdateGenreQuery ', this.state);
     }
 
     @autobind
     onUpdateDateQuery(newQuery) {
         this.setState({ date: newQuery });
-        console.log('onUpdateDateQuery ', this.state);
     }
 
     @autobind
     onUpdateTitleArtistLabelQuery(newQuery) {
         this.setState({ titleArtistlabel: newQuery });
-        console.log('onUpdateTitleArtistLabelQuery ', this.state);
+    }
+
+    @autobind
+    onSaveAsPlaylist(name) {
+        console.log(name);
+       // this.setState({ titleArtistlabel: newQuery });
+    }
+
+    @autobind
+    onClearFilters() {
+        if (this.titleArtist) this.titleArtist.clearFilters();
+        if (this.stylesForm) this.stylesForm.clearFilters();
+        if (this.genresForm) this.genresForm.clearFilters();
     }
 
     render() {
         const cssStyles = require('./Home.scss');
         const theme = require('../../theme/Theme.scss');
+
+        console.log('discogs data ? ', this.props.discogsData);
 
         return (
             <div>
@@ -111,21 +114,23 @@ export default class Home extends Component {
                     <div className={cssStyles.discogsForm}>
                         <h3>Step 1: Query Albums from Discogs database (up to 100 results)</h3>
                         <TitleArtistLabelForm
+                            ref={(comp) => { this.titleArtist = comp; }}
                             updateTitleArtistLabelQuery={ this.onUpdateTitleArtistLabelQuery }
                         />
                         <StylesForm
+                            ref={(comp) => { this.stylesForm = comp; }}
                             updateStyleQuery={ this.onUpdateStyleQuery }
                         />
                         <GenresForm
+                            ref={(comp) => { this.genresForm = comp; }}
                             updateDateQuery={ this.onUpdateDateQuery}
                             updateCountryQuery={ this.onUpdateCountryQuery}
                             updateGenreQuery={ this.onUpdateGenreQuery}
                         />
-                        <div className={cssStyles.legend}>* This search will only return the albums that are found in Spotify as well</div>
-
-                        <div>
-                            <Button className={cssStyles.buttonQuery} raised label="Clear Filters" onClick={this.onSubmitQuery} theme={theme}/>
-                            <Button className={cssStyles.buttonQuery} raised label="Query Discogs" onClick={this.onSubmitQuery} theme={theme}/>
+                        <div className={cssStyles.right}>
+                            <div className={cssStyles.legend}>* This search will only return the albums that are found in Spotify as well</div>
+                            <Button className={cssStyles.clearButton} label="Clear Filters" onClick={this.onClearFilters} theme={theme}/>
+                            <Button className={cssStyles.queryButton} raised label="Query Discogs" onClick={this.onSubmitQuery} theme={theme}/>
                         </div>
                     </div>
 
@@ -133,8 +138,20 @@ export default class Home extends Component {
                         <ProgressBar mode="indeterminate" theme={theme}/>
                     )}
 
-                    <AlbumsFound />
-                    <PlaylistSummary />
+                    { this.props.discogsData && (
+                        <SearchSummary
+                            saveAsPlaylist={this.onSaveAsPlaylist}
+                            title={this.titleArtist.state.title}
+                            artist={this.titleArtist.state.artist}
+                            label={this.titleArtist.state.label}
+                            stylesIn={this.stylesForm.state.stylesAdded}
+                            stylesOut={this.stylesForm.state.stylesExcluded}
+                            genre={this.genresForm.state.genresAdded}
+                            country={this.genresForm.state.countryAdded}
+                            year={this.genresForm.getDecadeState().year}
+                            decade={this.genresForm.getDecadeState().decade}
+                        />
+                    )}
                 </div>
             </div>);
     }

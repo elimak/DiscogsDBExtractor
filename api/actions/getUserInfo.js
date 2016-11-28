@@ -8,7 +8,7 @@ export default function getUserInfo(req) {
                 console.log('Some information about the authenticated user', data.body);
                 resolve(data.body);
             }, function(err) {
-                console.log('We failed to load the user', JSON.stringify(err));
+                console.log('AA We failed to load the user', JSON.stringify(err));
                 reject(err);
             });
     });

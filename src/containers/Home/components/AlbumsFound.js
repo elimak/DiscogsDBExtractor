@@ -2,18 +2,11 @@ import React, { Component, PropTypes } from 'react';
 import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as spotifyActions from 'redux/modules/spotify';
-import { Button } from 'react-toolbox/lib/button';
-import { ProgressBar } from 'react-toolbox/lib/progress_bar';
-import Input from 'react-toolbox/lib/input';
+import { Switch } from 'react-toolbox/lib/switch';
 
 function mapStateToProps(state) {
     return {
-        discogsData: state.discogs.discogsData,
-        loadingDiscogs: state.discogs.loading,
-        savingSpotify: state.spotify.saving,
-        savedSpotify: state.spotify.saved,
-        playlist: state.spotify.playlist,
-        userData: state.userInfo.userData
+        discogsData: state.discogs.discogsData
     };
 }
 
@@ -23,105 +16,93 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
+
 @connect(mapStateToProps, mapDispatchToProps)
 export default class AlbumsFound extends Component {
     static propTypes = {
-        discogsData: PropTypes.object,
-        spotifyActions: PropTypes.object,
-        playlist: PropTypes.object,
-        userData: PropTypes.object,
-        loadingDiscogs: Boolean,
-        savingSpotify: Boolean,
-        savedSpotify: Boolean
+        discogsData: PropTypes.object
     };
 
     state = {
-        playlistName: ''
-    };
-
-    onSavePlaylist() {
-        const name = this.state.playlistName || 'this is a test';
-        const albums = this.props.discogsData.map(obj => obj.id);
-        this.props.spotifyActions.savePlaylist(this.props.userData.id, name, albums);
+        removed: []
     }
 
-    handleChange(name, value) {
-        this.setState({...this.state, [name]: value});
+    getRows() {
+        const rows = [];
+        for (let index = 0; index < this.props.discogsData.length; index += 2) {
+            rows.push([this.props.discogsData[index], this.props.discogsData[(index + 1)]]);
+        }
+
+        return rows;
+    }
+
+    getRow(row) {
+        const cssStyles = require('../Home.scss');
+        return (
+            <div className={cssStyles.row}>
+                <div className={cssStyles.flexBox_2}>
+                    <div>
+                        { this.getItem(row[0]) }
+                    </div>
+                    <div>
+                        { this.getItem(row[1]) }
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    getItem(album) {
+        if (!album) {
+            return (<div></div>);
+        }
+
+        console.log(album);
+
+        const cssStyles = require('../Home.scss');
+        return (<div>
+            <iframe src={`https://embed.spotify.com/?uri=spotify:album:${album.id}`} width="250" height="80" frameBorder="0" allowTransparency="true"></iframe>
+            <Switch
+                checked={this.isChecked(album.id)}
+                label="Add to playlist"
+                onChange={this.handleChange.bind(this, album.id)}
+            />
+            <div className={cssStyles['card-body']}>
+                <div>{album.artist.name} - {album.name}</div>
+                <ul>
+                    <li className={cssStyles.pink}><span>Styles: </span>{album.styles.join(', ')}</li>
+                    <li className={cssStyles.blue}><span>Labels: </span>{album.labels.join(', ')}</li>
+                </ul>
+            </div>
+        </div>);
+    }
+
+    handleChange(albumID, value) {
+        const removed = this.state.removed;
+        if (!value) {
+            if (this.isChecked(albumID)) {
+                removed.push(albumID);
+            }
+        } else {
+            const index = removed.indexOf(albumID);
+            removed.splice(index, 1);
+        }
+        this.setState({
+            removed
+        });
+    }
+
+    isChecked(albumID) {
+        return !this.state.removed.includes(albumID);
     }
 
     render() {
         const cssStyles = require('../Home.scss');
 
-        const isLoading = this.props.loadingDiscogs;
-        const isSaving = this.props.savingSpotify;
-        const hasNoResult = this.props.discogsData && !this.props.discogsData.length;
-        const hasResult = !!(this.props.discogsData && this.props.discogsData.length);
-
-        const showResults = hasResult && !isLoading && !isSaving;
-        const showNoResults = hasNoResult && !isLoading && !isSaving;
-
-        // console.log('isLogged ', isLogged);
-        // console.log('isSaving ', isLoading);
-        // console.log('hasNoResult ', hasNoResult);
-        // console.log('hasResult ', hasResult);
-        //
-        // console.log('AlbumsFound RENDER');
-        // console.log('userData ', this.props.userData);
-        // console.log('discogsData ', this.props.discogsData);
-        // console.log('render this: ', (isLogged && hasResult && !isLoading));
-        // console.log('render this: ', isLogged, ' && ', hasResult, ' && ', !isLoading);
-
-        if (!this.props.discogsData || !!this.props.playlist) {
-            return (<div/>);
-        }
-
-        return (<div className={cssStyles.results}>
-            { showResults && (
-                <div><h3>This search found: { this.props.discogsData.length } records</h3></div>
-            )}
-
-            { showResults &&
-            ( this.props.discogsData.map((album) => {
-                return (<div>
-                    <iframe src={`https://embed.spotify.com/?uri=spotify:album:${album.id}`} width="250" height="80" frameBorder="0" allowTransparency="true"></iframe>
-                    <div className={cssStyles['card-body']}>
-                        <h4>{album.artist.name} - {album.name}</h4>
-                        <p className={cssStyles.pink}>{album.styles.join(', ')}</p>
-                        <p className={cssStyles.blue}>{album.labels.join(', ')}</p>
-                    </div>
-                    <hr/>
-                </div>);
-            }))}
-
-            { showResults && (
-                <div>
-                    <Input
-                        type="text"
-                        label="Playlist Name"
-                        name="playlistName"
-                        value={this.state.playlistName}
-                        onChange={this.handleChange.bind(this, 'playlistName')}
-                        maxLength={50} />
-                    <Button raised primary label="Save Playlist"
-                        disabled={isSaving || (this.state.playlistName.length < 2)}
-                        onClick={this.onSavePlaylist.bind(this)}/>
-                </div>
-            )}
-
-            { isSaving && (
-                    <div>
-                        <ProgressBar mode="indeterminate"/>
-                        <p>Please wait, we are currently saving your new playlist <b>{this.state.playlistName}</b></p>
-                        <ul>
-                            { this.props.discogsData.map((album) => (<li>{album.artist.name} - {album.name}</li>)) }
-                        </ul>
-                    </div>
-                )
-            }
-
-            { showNoResults && (
-                <p>There was no record found</p>
-            )}
-        </div>);
+        return (
+            <div className={cssStyles.results}>
+                { this.getRows().map((row) => this.getRow(row)) }
+            </div>
+        );
     }
 }

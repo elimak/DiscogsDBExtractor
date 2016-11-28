@@ -19,6 +19,11 @@ export default class GenresForm extends Component {
     };
 
     @autobind
+    getDecadeState() {
+        return this.decades.state;
+    }
+
+    @autobind
     handleGenreSelection(val) {
         const genresAdded = val.length ? val[0] : '';
         this.setState({ genresAdded });
@@ -36,6 +41,15 @@ export default class GenresForm extends Component {
         if (countryAdded.length > 0 ) {
             this.props.updateCountryQuery(`&country=${countryAdded.split(' ').join('+')}`);
         }
+    }
+
+    clearFilters() {
+        this.setState({
+            genresAdded: '',
+            countryAdded: ''
+        });
+        if (this.decades) this.decades.clearFilters();
+        this.props.updateGenreQuery('');
     }
 
     render() {
@@ -77,6 +91,7 @@ export default class GenresForm extends Component {
                 </div>
                 <div style={styleNoPadding}>
                     <DecadesYearsForm
+                        ref={(comp) => { this.decades = comp; }}
                         updateDateQuery={this.props.updateDateQuery}
                     />
                 </div>
