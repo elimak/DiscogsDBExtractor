@@ -136,8 +136,6 @@ export default class App extends Component {
             );
         }
 
-        console.log('User is logged in and loaded?');
-
         return (
             <div className={styles.app}>
                 <Helmet {...config.app.head}/>
