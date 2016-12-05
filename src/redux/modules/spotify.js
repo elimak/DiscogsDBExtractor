@@ -2,6 +2,7 @@ const RESET_PLAYLIST = 'playlist/RESET_PLAYLIST';
 const SAVE_PLAYLIST = 'playlist/SAVE_PLAYLIST';
 const SAVE_PLAYLIST_SUCCESS = 'playlist/SAVE_PLAYLIST_SUCCESS';
 const SAVE_PLAYLIST_FAIL = 'playlist/SAVE_PLAYLIST_FAIL';
+import config from '../../config';
 
 const initialState = {
     saving: false,
@@ -66,7 +67,7 @@ const generateRandomString = (length) => {
 
 export function connectSpotify(notYou) {
     const clientId = '8a137d38ba9d46b9a2ca8528eca44bed'; // Your client id
-    const redirectUri = process.env.REDIRECT ? process.env.REDIRECT : 'http://localhost:3000'; // Your redirect uri
+    const redirectUri = config.redirect; // Your redirect uri
     const state = generateRandomString(16);
     localStorage.setItem(stateKey, state);
     const scope = 'playlist-modify-private user-read-private user-read-email';
