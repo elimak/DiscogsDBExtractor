@@ -66,7 +66,7 @@ const generateRandomString = (length) => {
 
 export function connectSpotify(notYou) {
     const clientId = '8a137d38ba9d46b9a2ca8528eca44bed'; // Your client id
-    const redirectUri = 'http://localhost:3000'; // Your redirect uri
+    const redirectUri = process.env.REDIRECT ? process.env.REDIRECT : 'http://localhost:3000'; // Your redirect uri
     const state = generateRandomString(16);
     localStorage.setItem(stateKey, state);
     const scope = 'playlist-modify-private user-read-private user-read-email';
