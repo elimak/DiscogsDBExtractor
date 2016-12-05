@@ -1,6 +1,7 @@
 import spotifyApi from '../utils/spotifyWrapper';
 
 export default function getUserInfo(req) {
+    console.log('token ', req.body.token);
     spotifyApi.setAccessToken(req.body.token);
     return new Promise((resolve, reject) => {
         spotifyApi.getMe()

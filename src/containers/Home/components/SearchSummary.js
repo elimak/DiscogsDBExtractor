@@ -49,13 +49,19 @@ export default class SearchSummary extends Component {
     };
 
     state = {
-        playlistName: ''
+        playlistName: '',
+        selection: []
     };
 
     @autobind
     onSavePlaylist() {
         const name = this.state.playlistName || 'this is a test';
-        this.props.saveAsPlaylist(name);
+        this.props.saveAsPlaylist(name, this.state.selection);
+    }
+
+    @autobind
+    onAlbumSelectionUpdate(selection) {
+        this.setState(...this.state, { selection });
     }
 
     @autobind
@@ -129,7 +135,9 @@ export default class SearchSummary extends Component {
                 </div>
 
                 { !this.props.savingSpotify && !this.props.playlistInfo && hasResult && (
-                    <AlbumsFound />
+                    <AlbumsFound
+                        selectionUpdate={this.onAlbumSelectionUpdate}
+                    />
                 )}
 
                 { this.props.savingSpotify && (

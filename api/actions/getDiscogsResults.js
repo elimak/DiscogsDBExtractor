@@ -66,16 +66,19 @@ function processSpotifySearch(masters, index, values, resolve) {
 
     const master = masters[index];
     master.title = cleanUpMasterTitle(master.title);
-    console.log(master.title);
     spotifyApi.searchAlbums(master.title).then((result) => {
         clearTimeout(timeout);
         if (result.body.albums.items.length === 1) {
             const album = result.body.albums.items[0];
             values[index] = {
                 query: master.title,
+                discogs: `https://www.discogs.com${master.uri}`,
+                spotify: `https://open.spotify.com/album/${album.id}`,
                 styles: master.style,
                 labels: master.label,
                 image: album.images[1].url,
+                year: master.year,
+                country: master.country,
                 name: album.name,
                 id: album.id,
                 artist: album.artists.map(artist => {
@@ -101,7 +104,6 @@ export default function getDiscogsResults(req) {
         doRequest(opt).then((res) => {
             if (res.response) {
                 const values = [];
-                console.log('Discogs search result - ', res.response.results.length);
                 if (res.response.results.length > 0) {
                     processSpotifySearch(res.response.results, 0, values, resolve);
                 } else {

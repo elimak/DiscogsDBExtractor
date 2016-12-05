@@ -89,9 +89,8 @@ export default class Home extends Component {
     }
 
     @autobind
-    onSaveAsPlaylist(name) {
-        console.log(name);
-       // this.setState({ titleArtistlabel: newQuery });
+    onSaveAsPlaylist(name, albums) {
+        this.props.spotifyActions.savePlaylist(this.props.userData.id, name, albums.map((album) => album.id));
     }
 
     @autobind

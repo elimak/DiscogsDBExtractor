@@ -63,7 +63,7 @@ export default class App extends Component {
         console.log('loadedUser ', this.props.loadedUser);
 
         if (sessionStorage.getItem('token') && !this.props.loadingUser && !this.props.loadedUser) {
-            this.props.userActions.loadUserData(params.access_token);
+            this.props.userActions.loadUserData(sessionStorage.getItem('token'));
             browserHistory.push('/');
         } else if (!!params.access_token) {
             this.setState({params});

@@ -49,6 +49,10 @@
 
 }
 
+.results{
+    margin-top: 30px;
+}
+
 .noResult{
     padding: 20px;
     h3 {
@@ -61,7 +65,15 @@
     }
 }
 .legend {
-    margin: 20px 0px;
+    margin: 20px 0;
+}
+
+.player {
+    background-color: #282828;
+    margin: 0;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 15px;
 }
 
 .flexBox_3 {
@@ -70,12 +82,21 @@
 
     > div {
         display: inline-flex;
-        padding-right:20px;
-        width:33%;
+        padding-right:5px;
+        padding-left:5px;
+        width:33.3%;
         > div {
             width: 100%;
-            padding-right:0px;
+            padding-right:0;
         }
+    }
+    > div:first-child {
+        padding-right:10px;
+        padding-left:0;
+    }
+    > div:last-child {
+        padding-right:0;
+        padding-left:10px;
     }
     li {
         line-height: 0.7em;
@@ -93,12 +114,19 @@
 
     > div {
         display: inline-flex;
-        padding-right:20px;
         width:50%;
         > div {
-            padding-right:0px;
+            padding-right:0;
             width: 100%;
         }
+    }
+    > div:first-child {
+        padding-right:8px;
+        padding-left:0;
+    }
+    > div:last-child {
+        padding-right:0;
+        padding-left:8px;
     }
     li {
         line-height: 0.7em;
@@ -130,5 +158,6 @@
     ul{
         margin-top: 0px;
     }
+    margin-bottom: 15px;
 }
 

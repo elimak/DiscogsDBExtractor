@@ -20,7 +20,8 @@ function mapDispatchToProps(dispatch) {
 @connect(mapStateToProps, mapDispatchToProps)
 export default class AlbumsFound extends Component {
     static propTypes = {
-        discogsData: PropTypes.object
+        discogsData: PropTypes.object,
+        selectionUpdate: PropTypes.function
     };
 
     state = {
@@ -29,23 +30,26 @@ export default class AlbumsFound extends Component {
 
     getRows() {
         const rows = [];
-        for (let index = 0; index < this.props.discogsData.length; index += 2) {
-            rows.push([this.props.discogsData[index], this.props.discogsData[(index + 1)]]);
+        for (let index = 0; index < this.props.discogsData.length; index += 3) {
+            rows.push([this.props.discogsData[index], this.props.discogsData[(index + 1)], this.props.discogsData[(index + 2)]]);
         }
 
         return rows;
     }
 
-    getRow(row) {
+    getRow(row, index) {
         const cssStyles = require('../Home.scss');
         return (
-            <div className={cssStyles.row}>
-                <div className={cssStyles.flexBox_2}>
+            <div className={cssStyles.row} key={index}>
+                <div className={cssStyles.flexBox_3}>
                     <div>
                         { this.getItem(row[0]) }
                     </div>
                     <div>
                         { this.getItem(row[1]) }
+                    </div>
+                    <div>
+                        { this.getItem(row[2]) }
                     </div>
                 </div>
             </div>
@@ -57,11 +61,11 @@ export default class AlbumsFound extends Component {
             return (<div></div>);
         }
 
-        console.log(album);
-
         const cssStyles = require('../Home.scss');
         return (<div>
-            <iframe src={`https://embed.spotify.com/?uri=spotify:album:${album.id}`} width="250" height="80" frameBorder="0" allowTransparency="true"></iframe>
+            <div className={cssStyles.player}>
+                <iframe src={`https://embed.spotify.com/?uri=spotify:album:${album.id}`} width="250" height="80" frameBorder="0" allowTransparency="true"></iframe>
+            </div>
             <Switch
                 checked={this.isChecked(album.id)}
                 label="Add to playlist"
@@ -72,6 +76,8 @@ export default class AlbumsFound extends Component {
                 <ul>
                     <li className={cssStyles.pink}><span>Styles: </span>{album.styles.join(', ')}</li>
                     <li className={cssStyles.blue}><span>Labels: </span>{album.labels.join(', ')}</li>
+                    <li><span>Year: </span>{album.year} <span>Country: </span>{album.country}</li>
+                    <li><span>External urls: </span><a href={album.spotify} target="_blank">Spotify</a><span> - </span><a href={album.discogs} target="_blank">Discogs</a></li>
                 </ul>
             </div>
         </div>);
@@ -90,6 +96,9 @@ export default class AlbumsFound extends Component {
         this.setState({
             removed
         });
+
+        const filtered = this.props.discogsData.filter((data) => !removed.includes(data.id));
+        this.props.selectionUpdate(filtered);
     }
 
     isChecked(albumID) {
@@ -101,7 +110,7 @@ export default class AlbumsFound extends Component {
 
         return (
             <div className={cssStyles.results}>
-                { this.getRows().map((row) => this.getRow(row)) }
+                { this.getRows().map((row, index) => this.getRow(row, index)) }
             </div>
         );
     }
