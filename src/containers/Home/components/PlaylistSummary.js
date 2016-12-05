@@ -32,9 +32,13 @@ export default class PlaylistSummary extends Component {
 
         return (
             <div className={cssStyles.results}>
-                <p>Show playlist summary:</p>
-                <iframe src={`https://embed.spotify.com/?uri=${this.props.playlist.uri}`}
-                 width="640" height="720" frameBorder="0" allowTransparency="true"></iframe>
+                <div>
+                    <h3>Enjoy!</h3>
+                    <div className={cssStyles.player}>
+                        <iframe src={`https://embed.spotify.com/?uri=${this.props.playlist.uri}`}
+                                width="640" height="720" frameBorder="0" allowTransparency="true"></iframe>
+                    </div>
+                </div>
             </div>
         );
     }

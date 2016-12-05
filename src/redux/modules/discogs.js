@@ -1,5 +1,5 @@
 const SEARCH = 'discogs/SEARCH';
-const SEARCH_SUCCESS = 'discogs/SEARCH_SUCCESS';
+export const SEARCH_SUCCESS = 'discogs/SEARCH_SUCCESS';
 const SEARCH_FAIL = 'discogs/SEARCH_FAIL';
 
 const initialState = {

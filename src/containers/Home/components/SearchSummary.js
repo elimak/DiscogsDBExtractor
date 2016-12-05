@@ -12,6 +12,7 @@ import { ProgressBar } from 'react-toolbox/lib/progress_bar';
 
 function mapStateToProps(state) {
     return {
+        searchData: state.search,
         discogsData: state.discogs.discogsData,
         savingSpotify: state.spotify.saving,
         savedSpotify: state.spotify.saved,
@@ -29,6 +30,7 @@ function mapDispatchToProps(dispatch) {
 @connect(mapStateToProps, mapDispatchToProps)
 export default class SearchSummary extends Component {
     static propTypes = {
+        searchData: PropTypes.object,
         saveAsPlaylist: PropTypes.function,
         discogsData: PropTypes.array,
         spotifyActions: PropTypes.object,
@@ -75,22 +77,22 @@ export default class SearchSummary extends Component {
         const cssStyles = require('../Home.scss');
         const theme = require('../../../theme/Theme.scss');
 
-        console.log('serach ', this.props.discogsData);
-
         const hasNoResult = !this.props.discogsData.length;
         const hasResult = !!this.props.discogsData.length;
 
+        const { searchData: { title, artist, label, stylesIn, stylesOut, genre, country, year, decade }} = this.props;
+
         const getResult = () => {
             const parts = [];
-            if (this.props.title) parts.push({pre: 'Title', val: this.props.title });
-            if (this.props.artist) parts.push({pre: 'Artist', val: this.props.artist });
-            if (this.props.label) parts.push({pre: 'Label', val: this.props.label });
-            if (this.props.stylesIn && this.props.stylesIn.length) parts.push({pre: 'Styles added', val: this.props.stylesIn.join(', ') });
-            if (this.props.stylesOut && this.props.stylesOut.length) parts.push({pre: 'Styles excluded', val: this.props.stylesOut.join(', ') });
-            if (this.props.genre) parts.push({pre: 'Genre', val: this.props.genre });
-            if (this.props.country) parts.push({pre: 'Country', val: this.props.country });
-            if (this.props.year) parts.push({pre: 'Year', val: this.props.year });
-            if (this.props.decade) parts.push({pre: 'Decade', val: this.props.decade });
+            if (title) parts.push({pre: 'Title', val: title });
+            if (artist) parts.push({pre: 'Artist', val: artist });
+            if (label) parts.push({pre: 'Label', val: label });
+            if (stylesIn && stylesIn.length) parts.push({pre: 'Styles added', val: stylesIn.join(', ') });
+            if (stylesOut && stylesOut.length) parts.push({pre: 'Styles excluded', val: stylesOut.join(', ') });
+            if (genre) parts.push({pre: 'Genre', val: genre });
+            if (country) parts.push({pre: 'Country', val: country });
+            if (year) parts.push({pre: 'Year', val: year });
+            if (decade) parts.push({pre: 'Decade', val: decade });
 
             return parts;
         };
@@ -123,11 +125,13 @@ export default class SearchSummary extends Component {
                                     type="text"
                                     label="Playlist Name"
                                     name="playlistName"
+                                    disabled={(this.props.savedSpotify && this.props.playlistInfo)}
                                     value={this.state.playlistName}
                                     onChange={this.handleChange}
                                     maxLength={50} />
                                 <Button raised theme={theme} label="Save Playlist"
-                                        disabled={this.props.savingSpotify || (this.state.playlistName.length < 2)}
+                                        disabled={this.props.savingSpotify || (this.state.playlistName.length < 2) ||
+                                        (this.props.savedSpotify && this.props.playlistInfo)}
                                         onClick={this.onSavePlaylist}/>
                             </div>
                         </div>
@@ -141,9 +145,8 @@ export default class SearchSummary extends Component {
                 )}
 
                 { this.props.savingSpotify && (
-                    <div>
-                        <ProgressBar mode="indeterminate"/>
-                        <p>Please wait, we are currently saving your new playlist <b>{this.state.playlistName}</b></p>
+                    <div className={cssStyles.results}>
+                        <ProgressBar mode="indeterminate" theme={theme}/>
                     </div>
                 )}
 

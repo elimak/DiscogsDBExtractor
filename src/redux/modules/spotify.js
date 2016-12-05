@@ -1,3 +1,4 @@
+const RESET_PLAYLIST = 'playlist/RESET_PLAYLIST';
 const SAVE_PLAYLIST = 'playlist/SAVE_PLAYLIST';
 const SAVE_PLAYLIST_SUCCESS = 'playlist/SAVE_PLAYLIST_SUCCESS';
 const SAVE_PLAYLIST_FAIL = 'playlist/SAVE_PLAYLIST_FAIL';
@@ -10,6 +11,16 @@ const initialState = {
 
 export default function reducer(state = initialState, action = {}) {
     switch (action.type) {
+        case RESET_PLAYLIST:
+            console.log('calling playlist reset with?', action);
+            return {
+                ...state,
+                saved: false,
+                saving: false,
+                playlist: null,
+                error: null
+            };
+
         case SAVE_PLAYLIST:
             console.log('calling playlist save with?', action);
             return {
@@ -27,6 +38,7 @@ export default function reducer(state = initialState, action = {}) {
                 saved: true,
                 playlist: action.result.playlistInfo
             };
+
         case SAVE_PLAYLIST_FAIL:
             console.log('looks like we failed?', action);
             return {
@@ -70,8 +82,13 @@ export function connectSpotify(notYou) {
     window.location = url;
 }
 
+export function resetPlaylist() {
+    return {
+        type: RESET_PLAYLIST
+    };
+}
+
 export function savePlaylist(userId, playlistName, albums) {
-    console.log('here', userId, playlistName, albums);
     return {
         types: [SAVE_PLAYLIST, SAVE_PLAYLIST_SUCCESS, SAVE_PLAYLIST_FAIL],
         promise: (client) => client.post('/savePlaylist', {

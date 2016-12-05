@@ -28,6 +28,10 @@ export default class AlbumsFound extends Component {
         removed: []
     }
 
+    componentWillMount() {
+        this.selectionUpdate();
+    }
+
     getRows() {
         const rows = [];
         for (let index = 0; index < this.props.discogsData.length; index += 3) {
@@ -97,6 +101,11 @@ export default class AlbumsFound extends Component {
             removed
         });
 
+        this.selectionUpdate();
+    }
+
+    selectionUpdate() {
+        const removed = this.state.removed;
         const filtered = this.props.discogsData.filter((data) => !removed.includes(data.id));
         this.props.selectionUpdate(filtered);
     }

@@ -3,6 +3,7 @@ import autobind from 'autobind-decorator';
 import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Helmet from 'react-helmet';
+import * as searchActions from 'redux/modules/search';
 import * as discogsActions from 'redux/modules/discogs';
 import * as userActions from 'redux/modules/userInfo';
 import * as spotifyActions from 'redux/modules/spotify';
@@ -16,6 +17,7 @@ import SearchSummary from './components/SearchSummary';
 function mapStateToProps(state) {
     return {
         discogsData: state.discogs.discogsData,
+        discogsError: state.discogs.error,
         loadingDiscogs: state.discogs.loading,
         userData: state.userInfo.userData,
         loginError: state.userInfo.error,
@@ -25,6 +27,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
+        searchActions: bindActionCreators(searchActions, dispatch),
         userActions: bindActionCreators(userActions, dispatch),
         discogsActions: bindActionCreators(discogsActions, dispatch),
         spotifyActions: bindActionCreators(spotifyActions, dispatch)
@@ -36,8 +39,10 @@ export default class Home extends Component {
     static propTypes = {
         discogsData: PropTypes.array,
         userData: PropTypes.object,
+        discogsError: PropTypes.object,
         loginError: PropTypes.object,
         loadedUser: PropTypes.object,
+        searchActions: PropTypes.object,
         discogsActions: PropTypes.object,
         spotifyActions: PropTypes.object,
         userActions: PropTypes.object,
@@ -56,8 +61,19 @@ export default class Home extends Component {
     @autobind
     onSubmitQuery() {
         const query = `${this.state.genres}${this.state.styles}${this.state.titleArtistlabel}${this.state.date}${this.state.country}`;
-        console.log(query);
         if (query) {
+            this.props.searchActions.storeSearch({
+                title: this.titleArtist.state.title,
+                artist: this.titleArtist.state.artist,
+                label: this.titleArtist.state.label,
+                stylesIn: this.stylesForm.state.stylesAdded,
+                stylesOut: this.stylesForm.state.stylesExcluded,
+                genre: this.genresForm.state.genresAdded,
+                country: this.genresForm.state.countryAdded,
+                year: this.genresForm.getDecadeState().year,
+                decade: this.genresForm.getDecadeState().decade
+            });
+            this.props.spotifyActions.resetPlaylist();
             this.props.discogsActions.search(query);
         }
     }
@@ -90,7 +106,8 @@ export default class Home extends Component {
 
     @autobind
     onSaveAsPlaylist(name, albums) {
-        this.props.spotifyActions.savePlaylist(this.props.userData.id, name, albums.map((album) => album.id));
+        const filtered = albums.map((album) => album.id);
+        this.props.spotifyActions.savePlaylist(this.props.userData.id, name, filtered);
     }
 
     @autobind
@@ -103,9 +120,6 @@ export default class Home extends Component {
     render() {
         const cssStyles = require('./Home.scss');
         const theme = require('../../theme/Theme.scss');
-
-        console.log('discogs data ? ', this.props.discogsData);
-
         return (
             <div>
                 <Helmet title="Home"/>
@@ -137,18 +151,15 @@ export default class Home extends Component {
                         <ProgressBar mode="indeterminate" theme={theme}/>
                     )}
 
+                    { this.props.discogsError && (
+                        <div>
+                            Your request has timed out, try narrowing your search
+                        </div>
+                    )}
+
                     { this.props.discogsData && (
                         <SearchSummary
                             saveAsPlaylist={this.onSaveAsPlaylist}
-                            title={this.titleArtist.state.title}
-                            artist={this.titleArtist.state.artist}
-                            label={this.titleArtist.state.label}
-                            stylesIn={this.stylesForm.state.stylesAdded}
-                            stylesOut={this.stylesForm.state.stylesExcluded}
-                            genre={this.genresForm.state.genresAdded}
-                            country={this.genresForm.state.countryAdded}
-                            year={this.genresForm.getDecadeState().year}
-                            decade={this.genresForm.getDecadeState().decade}
                         />
                     )}
                 </div>
